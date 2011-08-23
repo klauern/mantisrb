@@ -1,12 +1,12 @@
 require 'test_helper'
 
 MANTISBT_URL = "http://www.mantisbt.org/demo"
-MANTISBT_USER = "mantisrb"
+MANTISBT = "mantisrb"
 
 describe Mantis::Session do
 
   before do
-    @session = Mantis::Session.new MANTISBT_URL, MANTISBT_USER, MANTISBT_USER
+    @session = Mantis::Session.new MANTISBT_URL, MANTISBT, MANTISBT
   end
 
   describe "Mantis" do

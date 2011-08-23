@@ -11,7 +11,9 @@ module Mantis
       @pass = pass
       @connection = Savon::Client.new do
         wsdl.document = sanitize_url(url)
-        http.proxy ||= ENV['http_proxy']
+        if ENV['http_proxy']
+          http.proxy ||= ENV['http_proxy']
+        end
       end
     end
 
@@ -37,7 +39,7 @@ module Mantis
       unless url.match(/\/api\//) 
         return url + SOAP_API
       end
-        url
+      url
     end
 
     def add_credentials(param)
