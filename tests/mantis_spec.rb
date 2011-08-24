@@ -4,7 +4,13 @@ require_relative 'test_helper'
 describe Mantis::Session do
 
   before do
-    @session = Mantis::Session.new MANTISBT_URL, MANTISBT, MANTISBT
+    if ENV['MANTIS_USER'] && ENV['MANTIS_PASS'] && ENV['MANTIS_URL']
+      require 'base64'
+      @session = Mantis::Session.new ENV['MANTIS_URL'], ENV['MANTIS_USER'],
+        Base64.decode64(ENV['MANTIS_PASS'])
+    else
+      @session = Mantis::Session.new MANTISBT_URL, MANTISBT, MANTISBT
+    end
   end
 
   describe "Mantis" do

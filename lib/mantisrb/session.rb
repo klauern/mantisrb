@@ -1,4 +1,5 @@
 require 'mantisrb/config'
+require 'mantisrb/projects'
 
 module Mantis
 
@@ -11,30 +12,27 @@ module Mantis
       @pass = pass
       @connection = Savon::Client.new do
         wsdl.document = sanitize_url(url)
-        if ENV['http_proxy']
-          http.proxy ||= ENV['http_proxy']
-        end
+        http.proxy = ENV['http_proxy'] if ENV['http_proxy']
       end
     end
 
     def response(request, params={})
-      method = request.to_s
       conn_response = @connection.request request do
         soap.body = add_credentials(params)
       end
+      method = request.to_s
       unwrap_response(conn_response, method)
-    end
-
-    def project_by_id(id)
-      Project.new session, id
     end
 
     def config
       @config ||= Config.new @connection
     end
 
-    # Get the underlying SOAP client (Savon)
-    def client
+    def projects
+      @projects ||= Projects.new @connection
+    end
+
+    def savon_client
       @connection
     end
 
