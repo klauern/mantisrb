@@ -1,7 +1,5 @@
-require 'test_helper'
+require_relative 'test_helper'
 
-MANTISBT_URL = "http://www.mantisbt.org/demo"
-MANTISBT = "mantisrb"
 
 describe Mantis::Session do
 

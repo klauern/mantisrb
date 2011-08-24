@@ -1,4 +1,4 @@
-require "mantisrb/version"
+require 'mantisrb/version'
 require 'savon'
 
 #autoload :Session, 'mantisrb/session'

@@ -3,3 +3,6 @@ gem 'minitest'
   require "minitest/#{w}"
 }
 require 'mantisrb'
+
+MANTISBT_URL = "http://www.mantisbt.org/demo"
+MANTISBT = "mantisrb"

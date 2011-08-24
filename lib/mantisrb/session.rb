@@ -33,6 +33,11 @@ module Mantis
       @config ||= Config.new @connection
     end
 
+    # Get the underlying SOAP client (Savon)
+    def client
+      @connection
+    end
+
     private
 
     def sanitize_url(url)
@@ -52,10 +57,16 @@ module Mantis
       method_called += "_response"
       response = response_hash.body[method_called.to_sym][:return]
       if response.class == Hash
-        return response[:item]
+        return remove_xsi_type(response[:item])
       end
       return response
     end
 
+    # Removes the :"@xsi:type" key that is present in most responses
+    # from Mantis Connect.  Unless you need it, this API should be mapping
+    # those for you for most use-cases.
+    def remove_xsi_type(hash)
+      hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } }
+    end
   end
 end
