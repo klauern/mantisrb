@@ -25,35 +25,22 @@ describe Mantis::Session do
           @session.config.send(w).size.must_be :>=, 1
         }
       end
-      it "should get a list of statuses" do
-        @session.config.statuses.size.must_be :>=, 1
-      end
-      it "should get a list of priorities" do
-        @session.config.priorities.size.must_be :>=, 1
-      end
-      it "should get a list of severities" do
-        @session.config.severities.size.must_be :>=, 1
-      end
-      it "should get a list of reproducibilities" do
-        r = @session.config.reproducibilities
-        r.size.must_be :>=, 1
-      end
       it "should get the version of Mantis we're connecting to" do
-        assert_equal "1.2.5", @session.config.version
-      end
-      it "should get projections" do
-        @session.config.projections.size.must_be :>=, 1
+        @session.config.version.must_match "1.2"
       end
     end # config
 
     describe " projects" do
       
-      it "should get a project list" do
-        @session.projects.project_list.class.must_be :==, Hash
-        %w{ id name status enabled view_state access_min 
-            file_path description subprojects }.each { |w|
-          @session.projects.project_list.must_include w.to_sym
-        }
+      it "should get a project list if there are projects" do
+        proj_list = @session.projects.project_list
+        unless proj_list == nil
+          @session.projects.project_list.class.must_be :==, Hash
+          %w{ id name status enabled view_state access_min 
+              file_path description subprojects }.each { |w|
+            @session.projects.project_list.must_include w.to_sym
+          }
+        end
       end
 
     end # projects
