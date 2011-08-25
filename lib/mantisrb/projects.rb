@@ -25,9 +25,10 @@ module Mantis
       }
     end
 
+    # Return a Hash of projects, nil otherwise
     def project_list
       proj_list = @session.response :mc_projects_get_user_accessible
-      create_project_hash(proj_list)
+      create_project_hash(proj_list) if proj_list
     end
 
 

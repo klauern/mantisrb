@@ -64,7 +64,7 @@ module Mantis
     # from Mantis Connect.  Unless you need it, this API should be mapping
     # those for you for most use-cases.
     def remove_xsi_type(hash)
-      hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } }
+      hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } } if hash
     end
   end
 end
