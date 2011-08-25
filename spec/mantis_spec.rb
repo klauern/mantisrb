@@ -1,6 +1,5 @@
-require_relative 'test_helper'
+require_relative 'spec_helper'
       require 'base64'
-
 
 describe Mantis::Session do
 
