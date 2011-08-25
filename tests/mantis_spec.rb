@@ -45,6 +45,18 @@ describe Mantis::Session do
         @session.config.projections.size.must_be :>=, 1
       end
     end # config
+
+    describe " projects" do
+      
+      it "should get a project list" do
+        @session.projects.project_list.class.must_be :==, Hash
+        %w{ id name status enabled view_state access_min 
+            file_path description subprojects }.each { |w|
+          @session.projects.project_list.must_include w.to_sym
+        }
+      end
+
+    end # projects
   end # Mantis
 end # Mantis::Session
 

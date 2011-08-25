@@ -26,8 +26,24 @@ module Mantis
     end
 
     def project_list
-      @session.response :mc_projects_get_user_accessible
+      proj_list = @session.response :mc_projects_get_user_accessible
+      create_project_hash(proj_list)
     end
+
+
+    private
+
+    # The SOAP response from MantisConnect is an array of
+    # hashes, which makes dealing with it a bit of a nightmare.
+    # tease out the pieces and put them in as one hash.
+    def create_project_hash(project)
+      proj = {}
+      project.each { |ary|
+        proj[ary[0]] = ary[1]
+      }
+      proj
+    end
+
 
   end
 end
