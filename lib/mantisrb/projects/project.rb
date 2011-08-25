@@ -5,6 +5,7 @@ module Mantis
     attr_accessor :access_min, :file_path, :description, :subprojects
     attr_reader :id
 
+    
   end
 end
 

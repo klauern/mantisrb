@@ -5,5 +5,6 @@ gem 'minitest'
 $:.unshift File.join(File.dirname(__FILE__), "../lib") # 'lib' directory
 require 'mantisrb'
 
-MANTISBT_URL = "http://www.mantisbt.org/demo"
-MANTISBT = "mantisrb"
+MANTIS_URL = "http://www.plangineering.com/nek/mantis"
+MANTIS_USER = "admin"
+MANTIS_PASS = "RFBDSlBxYURURXpCMXpoeA=="
