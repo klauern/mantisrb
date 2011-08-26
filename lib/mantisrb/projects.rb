@@ -35,6 +35,27 @@ module Mantis
       @session.response :mc_projects_get_user_accessible
     end
 
+    # Create a new Project
+    def create(params)
+      if params[:status]
+        stat = @session.config.status_for params[:status]
+        params[:status] = stat
+      end
+      if params[:view_state]
+        state = @session.config.view_state_for params[:view_state]
+        params[:view_state] = state
+      end
+      if params[:access_min]
+        access = @session.config.access_min params[:access_min]
+        params[:access_min] = access
+      end
+
+      p = {}
+      p[:project] = params
+      @session.response :mc_project_add, p
+    end
+
+
 
     private
 
