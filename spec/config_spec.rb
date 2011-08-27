@@ -23,5 +23,15 @@ describe Mantis::Session do
     it "should get the version of Mantis we're connecting to" do
       @session.config.version.must_match "1.2"
     end
+
+    it "project_status_for should convert :symbol to \"string\"" do
+      @session.config.project_status_for(:development).wont_be_empty
+    end
+    it "view_state_for should convert :symbol to \"string\"" do
+      @session.config.view_state_for(:public).wont_be_empty
+    end
+    it "access_min should convert :symbol to \"string\"" do
+      @session.config.access_min(:public).wont_be_empty
+    end
   end # config
 end

@@ -10,10 +10,6 @@ module Mantis
       $statuses ||= @session.response_trimmed :mc_enum_status
     end
 
-    def status_for(status)
-      statuses.select { |stat| stat.value? status }[0] # return first value
-    end
-
     def priorities
       $priorities ||= @session.response_trimmed :mc_enum_priorities
     end
@@ -47,12 +43,17 @@ module Mantis
     end
 
     def access_min(level)
-      access_levels.select { |access| access.value? level }[0] # return first one
+      access_levels.select { |access| access.value? level.to_s }[0] # return first one
     end
 
     def project_status
       $project_states ||= @session.response_trimmed :mc_enum_project_status
     end
+
+    def project_status_for(status)
+      project_status.select { |stat| stat.value? status.to_s }[0] # return first value
+    end
+
 
     def project_view_states
       $project_view_states ||= @session.response_trimmed :mc_enum_project_view_states
@@ -63,7 +64,7 @@ module Mantis
     end
 
     def view_state_for(state)
-      view_states.select { |s| s.value? state }[0] # return first value
+      view_states.select { |s| s.value? state.to_s }[0] # return first value
     end
 
     def custom_field_types

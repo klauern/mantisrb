@@ -1,6 +1,7 @@
-
+require 'pp'
 module Mantis
 
+  
   class Projects
 
     def initialize session
@@ -38,7 +39,7 @@ module Mantis
     # Create a new Project
     def create(params)
       if params[:status]
-        stat = @session.config.status_for params[:status]
+        stat = @session.config.project_status_for params[:status]
         params[:status] = stat
       end
       if params[:view_state]
@@ -49,9 +50,14 @@ module Mantis
         access = @session.config.access_min params[:access_min]
         params[:access_min] = access
       end
+      unless params[:subprojects]
+        params[:subprojects] = {}
+      end
 
+      puts "\n\nSomething Something\n\n"
       p = {}
       p[:project] = params
+      pp p
       @session.response :mc_project_add, p
     end
 
