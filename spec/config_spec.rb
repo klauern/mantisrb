@@ -31,7 +31,7 @@ describe Mantis::Session do
       @session.config.view_state_for(:public).wont_be_empty
     end
     it "access_min should convert :symbol to \"string\"" do
-      @session.config.access_min(:public).wont_be_empty
+      @session.config.access_min(:viewer).wont_be_empty
     end
   end # config
 end
