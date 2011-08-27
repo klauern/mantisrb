@@ -20,8 +20,45 @@ describe Mantis::Session do
         @session.config.send(w).size.must_be :>=, 1
       }
     end
+
+    it "should get the statuses of Mantis we're connecting to" do
+      @session.config.statuses.must_match "1.2"
+    end
+    it "should get the priorities of Mantis we're connecting to" do
+      @session.config.priorities.must_match "1.2"
+    end
+    it "should get the severities of Mantis we're connecting to" do
+      @session.config.severities.must_match "1.2"
+    end
+    it "should get the reproducibilities of Mantis we're connecting to" do
+      @session.config.reproducibilities.must_match "1.2"
+    end
     it "should get the version of Mantis we're connecting to" do
       @session.config.version.must_match "1.2"
+    end
+    it "should get the projections of Mantis we're connecting to" do
+      @session.config.projections.must_match "1.2"
+    end
+    it "should get the ETA's of Mantis we're connecting to" do
+      @session.config.etas.must_match "1.2"
+    end
+    it "should get the resolutions of Mantis we're connecting to" do
+      @session.config.resolutions.must_match "1.2"
+    end
+    it "should get the access levels of Mantis we're connecting to" do
+      @session.config.access_levels.must_match "1.2"
+    end
+    it "should get the project statuses of Mantis we're connecting to" do
+      @session.config.project_status.must_match "1.2"
+    end
+    it "should get the project view states of Mantis we're connecting to" do
+      @session.config.project_view_states.must_match "1.2"
+    end
+    it "should get the issue view states of Mantis we're connecting to" do
+      @session.config.view_states.must_match "1.2"
+    end
+    it "should get the custom_field_types of Mantis we're connecting to" do
+      @session.config.custom_field_types.must_match "1.2"
     end
 
     it "project_status_for should convert :symbol to \"string\"" do
