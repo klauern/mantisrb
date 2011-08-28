@@ -43,24 +43,23 @@ describe Mantis::Session do
       wont_be_nil_for(@session.config.etas, "none")
     end
     it "should get the resolutions of Mantis we're connecting to" do
-      @session.config.resolutions.must_match "1.2"
+      wont_be_nil_for(@session.config.resolutions, "open")
     end
     it "should get the access levels of Mantis we're connecting to" do
-      @session.config.access_levels.must_match "1.2"
+      wont_be_nil_for(@session.config.access_levels, "viewer")
     end
     it "should get the project statuses of Mantis we're connecting to" do
-      @session.config.project_status.must_match "1.2"
+      wont_be_nil_for(@session.config.project_status, "development")
     end
     it "should get the project view states of Mantis we're connecting to" do
-      @session.config.project_view_states.must_match "1.2"
+      wont_be_nil_for(@session.config.project_view_states, "public")
     end
     it "should get the issue view states of Mantis we're connecting to" do
-      @session.config.view_states.must_match "1.2"
+      wont_be_nil_for(@session.config.view_states, "public")
     end
     it "should get the custom_field_types of Mantis we're connecting to" do
-      @session.config.custom_field_types.must_match "1.2"
+      wont_be_nil_for(@session.config.custom_field_types, "Numeric")
     end
-
     it "project_status_for should convert :symbol to \"string\"" do
       @session.config.project_status_for(:development).wont_be_empty
     end
