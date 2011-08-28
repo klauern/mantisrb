@@ -16,15 +16,15 @@ module Mantis
       end
     end
 
-    def response_trimmed(request,params={})
-      res = response(request, params)
-      unwrap_response(res,request.to_s)
-    end
-
     def response(request, params={})
       conn_response = @connection.request request do
         soap.body = add_credentials(params)
       end
+    end
+
+    def response_trimmed(request,params={})
+      res = response(request, params)
+      unwrap_response(res,request.to_s)
     end
 
     def config

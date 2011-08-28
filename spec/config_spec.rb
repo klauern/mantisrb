@@ -22,25 +22,25 @@ describe Mantis::Session do
     end
 
     it "should get the statuses of Mantis we're connecting to" do
-      @session.config.statuses.must_match "1.2"
+      wont_be_nil_for(@session.config.statuses, "acknowledged")
     end
     it "should get the priorities of Mantis we're connecting to" do
-      @session.config.priorities.must_match "1.2"
+      wont_be_nil_for(@session.config.priorities, "none")
     end
     it "should get the severities of Mantis we're connecting to" do
-      @session.config.severities.must_match "1.2"
+      wont_be_nil_for(@session.config.severities, "feature")
     end
     it "should get the reproducibilities of Mantis we're connecting to" do
-      @session.config.reproducibilities.must_match "1.2"
+      wont_be_nil_for(@session.config.reproducibilities, "always")
     end
     it "should get the version of Mantis we're connecting to" do
       @session.config.version.must_match "1.2"
     end
     it "should get the projections of Mantis we're connecting to" do
-      @session.config.projections.must_match "1.2"
+      wont_be_nil_for(@session.config.projections, "none")
     end
     it "should get the ETA's of Mantis we're connecting to" do
-      @session.config.etas.must_match "1.2"
+      wont_be_nil_for(@session.config.etas, "none")
     end
     it "should get the resolutions of Mantis we're connecting to" do
       @session.config.resolutions.must_match "1.2"

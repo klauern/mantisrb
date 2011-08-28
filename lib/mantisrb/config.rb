@@ -7,39 +7,39 @@ module Mantis
     end
 
     def statuses
-      $statuses ||= @session.response_trimmed :mc_enum_status
+      @statuses ||= @session.response_trimmed :mc_enum_status
     end
 
     def priorities
-      $priorities ||= @session.response_trimmed :mc_enum_priorities
+      @priorities ||= @session.response_trimmed :mc_enum_priorities
     end
 
     def severities
-      $severities ||= @session.response_trimmed :mc_enum_severities
+      @severities ||= @session.response_trimmed :mc_enum_severities
     end
 
     def reproducibilities
-      $reproducibilities ||= @session.response_trimmed :mc_enum_reproducibilities
+      @reproducibilities ||= @session.response_trimmed :mc_enum_reproducibilities
     end
 
     def version
-      $version ||= @session.response_trimmed :mc_version
+      @version ||= @session.response_trimmed :mc_version
     end
 
     def projections
-      $projections ||= @session.response_trimmed :mc_enum_projections
+      @projections ||= @session.response_trimmed :mc_enum_projections
     end
 
     def etas
-      $etas ||= @session.response_trimmed :mc_enum_etas
+      @etas ||= @session.response_trimmed :mc_enum_etas
     end
 
     def resolutions
-      $resolutions ||= @session.response_trimmed :mc_enum_resolutions
+      @resolutions ||= @session.response_trimmed :mc_enum_resolutions
     end
 
     def access_levels
-      $access_levels ||= @session.response_trimmed :mc_enum_access_levels
+      @access_levels ||= @session.response_trimmed :mc_enum_access_levels
     end
 
     def access_min(level)
@@ -47,7 +47,7 @@ module Mantis
     end
 
     def project_status
-      $project_states ||= @session.response_trimmed :mc_enum_project_status
+      @project_states ||= @session.response_trimmed :mc_enum_project_status
     end
 
     def project_status_for(status)
@@ -56,11 +56,11 @@ module Mantis
 
 
     def project_view_states
-      $project_view_states ||= @session.response_trimmed :mc_enum_project_view_states
+      @project_view_states ||= @session.response_trimmed :mc_enum_project_view_states
     end
 
     def view_states
-      $view_states ||= @session.response_trimmed :mc_enum_view_states
+      @view_states ||= @session.response_trimmed :mc_enum_view_states
     end
 
     def view_state_for(state)
@@ -68,7 +68,7 @@ module Mantis
     end
 
     def custom_field_types
-      $custom_field_types ||= @session.response_trimmed :mc_enum_custom_field_types
+      @custom_field_types ||= @session.response_trimmed :mc_enum_custom_field_types
     end
 
   end # Config

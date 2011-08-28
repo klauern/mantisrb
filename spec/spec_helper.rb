@@ -20,3 +20,7 @@ def create_session
   end
   session
 end
+
+def wont_be_nil_for(response, expectation)
+  response.select { |x| x.value? expectation }.wont_be_nil
+end
