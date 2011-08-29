@@ -20,3 +20,33 @@ URL = ENV['MANTIS_URL']
 USER = ENV['MANTIS_USER']
 SESSION = Mantis::Session.new URL, USER, PASS
 
+
+def try_project_create
+  SESSION.projects.create params={
+    name: "Test_Project",
+    status: "development",
+    enabled: true,
+    view_state: "public",
+    inherit_global: true
+  }
+end
+
+
+def try_proj
+  client = SESSION.savon_client
+  client.request :mc_project_add do
+    soap.body do |xml|
+      xml.username(:type => "xsd:string"){ xml << "admin"}
+      xml.password(:type => "xsd:string"){ xml << 'DPCJPqaDTEzB1zhx'}
+      xml.project(:type => "tns:ProjectData") { 
+        xml.name("Test_Project")
+        xml.status(:type => "tns:ObjectRef") { xml.id '10'
+                                               xml.name 'development' }
+        xml.view_state(type: 'tns:ObjectRef') { xml.id '10'
+                                                xml.name 'public' }
+        xml.enabled true
+      }
+    end
+  end
+end
+  

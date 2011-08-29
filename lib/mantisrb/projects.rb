@@ -54,10 +54,24 @@ module Mantis
         params[:subprojects] = {}
       end
 
-      puts "\n\nSomething Something\n\n"
-      p = {}
-      p[:project] = params
-      pp p
+      p = @session.savon_client.soap
+      p.body do |xml|
+        xml.project(type: 'tns:ProjectData') { 
+          xml.name(params[:name])
+          xml.status(type: 'tns:ObjectRef') { 
+            object_ref_for(params[:status], xml)
+          }
+          xml.view_state(type: 'tns:ObjectRef') { 
+            object_ref_for(params[:view_state], xml)
+          }
+          xml.enabled true
+          xml.access_min(type: 'tns:ObjectRef') {
+            object_ref_for(params[:view_state], xml)
+          }
+        }
+      end
+
+      #pp p
       @session.response :mc_project_add, p
     end
 
@@ -75,6 +89,12 @@ module Mantis
       }
       proj
     end
+
+    def object_ref_for(param, xml)
+      xml.id(param[:id])
+      xml.name(param[:name])
+    end
+
 
 
   end

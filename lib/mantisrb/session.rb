@@ -49,8 +49,16 @@ module Mantis
     end
 
     def add_credentials(param)
-      param[:username] = @user
-      param[:password] = @pass
+      #puts "\n\nThe Param Class is: #{param.class}\n\n"
+      #if param.class == Savon::SOAP::XML
+        #param.body do |xml|
+          #xml.username @user
+          #xml.password @pass
+        #end
+      #elsif param.class == Hash
+        param[:username] = @user
+        param[:password] = @pass
+      #end
       param
     end
 
