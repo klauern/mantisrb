@@ -3,7 +3,7 @@ MantisRb
 
 mantisrb is an API that works with the [Savon][1] gem to talk to a [Mantis][2]
 bug tracker.  [Mantis][2] provides an API to integrate with it through an older
-SOAP 1.1 interface (sorry).  Using this API should make working with an
+SOAP 1.1 interface (sorry) called [MantisConnect][3](see [example][4] for an interactive API browser).  Using this API should make working with an
 external Mantis bug tracker easy(ier).
 
 How to use
@@ -64,3 +64,5 @@ Getting issues is easy, too:
 
  [1]: http://www.savonrb.com
  [2]: http://www.mantisbt.org
+ [3]: http://www.futureware.biz/mantisconnect/concept.php
+ [4]: http://www.mantisbt.org/demo/api/soap/mantisconnect.php
