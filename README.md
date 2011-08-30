@@ -47,12 +47,17 @@ Issues
 
 Getting issues is easy, too:
 
-    session.issues.by_id 110 # if you know the id
+by id:
 
+    session.issues.by_id 110 # if you know the id
     session.issues.exists? 110 # if you don't know if it's there
+
+by ugly Mantis summary searching:
 
     session.issues.summary_matches "some regex"  # Do some ssearching (mind, it
     is going to be pretty slow)
+
+by project id:
 
     session.issues.by_project_id project_id, page_#, issues_per_page # The
     fully flexible way of getting a list of issues
