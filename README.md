@@ -73,8 +73,17 @@ by project id:
 Filters (Mantis equivalent of a saved search)
 ---------------------------------------------
 
+Filters are Mantis' way of saving a complicated search.  You likely know what
+they are if you have used Mantis, so if not, please take a brief look at [this
+blogpost][6] to see what you can use filters for.
+
+
+Get a filter by `id`:
+
     session.filters.by_project_id 110 # get all filters you can search by for
     the project_id
+
+Get issues for a particular filter:
 
     session.filters.get_issues project_id # get first 100 issues for a given
     filter
@@ -82,9 +91,20 @@ Filters (Mantis equivalent of a saved search)
     # fully-formatted search
 
 
+License, Open-Source-ness, and other Miscellany
+===============================================
 
+I've licensed `mantisrb` with the [MIT License][5], which should be permissive
+enough for you to muck around with and fiddle with.  It's open-source, so
+contributions are welcome and encouraged.
+
+Email: klauer - at - gmail.com for more information or send me a pull-request.
+
+Any questions on this as well, I'm all ears.  I hope to provide a useful gem
+that someone might make use of for their own projects.
 
  [1]: http://www.savonrb.com
  [2]: http://www.mantisbt.org
  [3]: http://www.futureware.biz/mantisconnect/concept.php
  [4]: http://www.mantisbt.org/demo/api/soap/mantisconnect.php
+ [6]: http://www.mantisbt.org/blog/?p=6
