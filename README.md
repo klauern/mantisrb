@@ -61,3 +61,6 @@ Getting issues is easy, too:
     session.issues.by_project_id project_id, limit # number of issues to get at
     once
 
+
+ [1]: http://www.savonrb.com
+ [2]: http://www.mantisbt.org
