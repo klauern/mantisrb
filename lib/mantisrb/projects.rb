@@ -90,6 +90,8 @@ module Mantis
       proj
     end
 
+    # MantisConnect defines a type as 'tns:ObjectRef', which is really
+    # just a hash of id an name types.
     def object_ref_for(param, xml)
       xml.id(param[:id])
       xml.name(param[:name])
