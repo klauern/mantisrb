@@ -12,5 +12,12 @@ module Mantis
         page_number: page_number,
         per_page: per_page
       }
+    end
+
+    def by_project(project_id)
+      @session.response :mc_filter_get, {
+        project_id: project_id
+      }
+    end
   end
 end

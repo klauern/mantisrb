@@ -1,5 +1,6 @@
 require 'mantisrb/config'
 require 'mantisrb/projects'
+require 'mantisrb/filters'
 
 module Mantis
 
@@ -33,6 +34,10 @@ module Mantis
 
     def projects
       @projects ||= Projects.new @connection
+    end
+
+    def filters
+      @filters ||= Filters.new @connection
     end
 
     def savon_client
