@@ -26,7 +26,7 @@ Projects
 
 Get a list of projects that your user can access:
 
-    session.projects.project_list
+    session.projects.list
 
 Create a project:
 
@@ -51,6 +51,10 @@ by id:
 
     session.issues.by_id 110 # if you know the id
     session.issues.exists? 110 # if you don't know if it's there
+    session.issues.by_name "problem name I solved" # name of Mantis issue that
+    you want to search explicitly by (no wildcards or regex'ing, sorry)
+
+    session.projects.issues "project name" # get first 100 issues by Project Name
 
 by ugly Mantis summary searching:
 
@@ -65,6 +69,19 @@ by project id:
     through things
     session.issues.by_project_id project_id, limit # number of issues to get at
     once
+
+Filters (Mantis equivalent of a saved search)
+---------------------------------------------
+
+    session.filters.by_project_id 110 # get all filters you can search by for
+    the project_id
+
+    session.filters.get_issues project_id # get first 100 issues for a given
+    filter
+    session.filters.get_issues project_id, page_num, issues_per_page
+    # fully-formatted search
+
+
 
 
  [1]: http://www.savonrb.com
