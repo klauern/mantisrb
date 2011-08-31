@@ -10,10 +10,10 @@ describe "Working With Projects" do
     it "should get a project list if there are projects" do
       proj_list = @session.projects.project_list
       unless proj_list == nil
-        @session.projects.project_list.class.must_be :==, Hash
+        @session.projects.project_list.class.must_be :==, Array
         %w{ id name status enabled view_state access_min 
               file_path description subprojects }.each { |w|
-          @session.projects.project_list.must_include w.to_sym
+          @session.projects.project_list[0].must_include w.to_sym
         }
       end
     end 

@@ -26,10 +26,17 @@ module Mantis
       }
     end
 
-    # Return a Hash of projects, nil otherwise
+    # Return an Array of project Hashes
     def project_list
       proj_list = @session.response_trimmed :mc_projects_get_user_accessible
-      create_project_hash(proj_list) if proj_list
+      # Savon will wrap an array of arrays of hashes if there's only one
+      # project returned from this call.  If so, we need to wrap and create an array
+      # with a Hash to be consistent
+      if proj_list[0].class == Array
+        proj_l = []
+        return proj_l << create_project_hash(proj_list) 
+      end
+      proj_list
     end
 
     def list
