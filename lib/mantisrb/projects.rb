@@ -18,7 +18,7 @@ module Mantis
       issues_by_id(id, page, per_page)
     end
 
-    def issues_by_id(id, page=0, per_page=100)
+    def issues_by_project_id(id, page=0, per_page=100)
       @session.response_trimmed :mc_project_get_issues, {
         :project_id => id,
         :page_number => page,
@@ -91,13 +91,11 @@ module Mantis
     end
 
     # MantisConnect defines a type as 'tns:ObjectRef', which is really
-    # just a hash of id an name types.
+    # just a hash of :id and :name
     def object_ref_for(param, xml)
       xml.id(param[:id])
       xml.name(param[:name])
     end
-
-
 
   end
 end
