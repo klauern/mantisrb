@@ -22,14 +22,14 @@ describe "Working With Projects" do
 
   describe "addition" do
     it "should create a new, basic project" do
-      new_project = @session.projects.create params={
+      new_project_id = @session.projects.create params={
         :name => "Test_Project",
         :status => "development",
         :enabled => true,
         :view_state => "public",
         :inherit_global => true
       }
-      new_project[:id].wont_be_nil
+      new_project_id.wont_be_nil
     end
 
     it "shouldn't accept incorrect status types" do

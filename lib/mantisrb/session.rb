@@ -4,8 +4,6 @@ require 'mantisrb/filters'
 
 module Mantis
 
-  class XmlTypeError < Error; end
-
   class Session
     SOAP_API = "/api/soap/mantisconnect.php?wsdl"
 
@@ -21,7 +19,6 @@ module Mantis
 
     def response(request, params={})
       conn_response = @connection.request request do
-
         soap.body = add_credentials(params)
       end
     end
@@ -58,13 +55,16 @@ module Mantis
 
     def add_credentials(param)
       if param.class == Nokogiri::XML::Document
-        # TODO: Insert Node element for Username and Password into param
-        # document
+        user = Nokogiri::XML::Node.new "username", param.root
+        user.content = @user
+        pass = Nokogiri::XML::Node.new "password", param.root
+        pass.content = @pass
+        return "#{user.to_s}\n#{pass.to_s}\n#{param.root}"
       elsif param.class == Hash
         param[:username] = @user
         param[:password] = @pass
       else
-        raise XmlTypeError, <<-ERR, param
+        raise Error, <<-ERR, param
         Incorrect Type.  Must be either Hash or Nokogiri::XML::Document.
         Passed in as #{param.class}
         ERR
