@@ -4,6 +4,8 @@ require 'mantisrb/filters'
 
 module Mantis
 
+  class XmlTypeError < Error; end
+
   class Session
     SOAP_API = "/api/soap/mantisconnect.php?wsdl"
 
@@ -55,17 +57,18 @@ module Mantis
     end
 
     def add_credentials(param)
-      #puts "\n\nThe Param Class is: #{param.class}\n\n"
-      #if param.class == Savon::SOAP::XML
-        #param.body do |xml|
-          #xml.username @user
-          #xml.password @pass
-        #end
-      if param.class == Hash
+      if param.class == Nokogiri::XML::Document
+        # TODO: Insert Node element for Username and Password into param
+        # document
+      elsif param.class == Hash
         param[:username] = @user
         param[:password] = @pass
+      else
+        raise XmlTypeError, <<-ERR, param
+        Incorrect Type.  Must be either Hash or Nokogiri::XML::Document.
+        Passed in as #{param.class}
+        ERR
       end
-      #elsif param.class == 
       param
     end
 
