@@ -6,35 +6,52 @@ module Mantis::XSD
     attr_reader :id
 
     def initialize(params)
+      params.each_key { |p|
+        instance_variable_set("@#{p}", params[p])
+      }
     end
 
     # Creates a Nokogiri::XML::Element object out of this class
     def to_element(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
-        xml.id_ @id
-        xml.name @name
-        xml.status(type: "tns:ObjectRef") {
-          xml.id_ @status.id
-          xml.name @status.name
-        }
-        xml.enabled @enabled
-        xml.view_state(type: "tns:ObjectRef") {
-          xml.id_ @view_state.id
-          xml.name @view_state.name
-        }
-        xml.access_min(type: "tns:ObjectRef") {
-          xml.id_ @access_min.id
-          xml.name @access_min.name
-        }
-        xml.file_path @file_path
-        xml.description @description
-        xml.subprojects(type: "tns:ProjectDataArray") {
-          # TODO: figure this one out, get Array of ProjectData
-        }
-        xml.inherit_global @inherit_global
+        xml.send(tag_name, type: "tns:ProjectData") do
+          xml.id_ @id unless @id == nil
+          xml.name @name unless @name == nil
+          if @status
+          xml.status(type: "tns:ObjectRef") {
+            xml.id_ @status[:id]
+            xml.name @status[:name]
+          }
+          end
+          xml.enabled @enabled unless @enabled == nil
+          if @view_state
+          xml.view_state(type: "tns:ObjectRef") {
+            xml.id_ @view_state[:id]
+            xml.name @view_state[:name]
+          }
+          end
+          if @access_min
+          xml.access_min(type: "tns:ObjectRef") {
+            xml.id_ @access_min[:id]
+            xml.name @access_min[:name]
+          }
+          end
+          xml.file_path @file_path unless @file_path == nil
+          xml.description @description unless @description == nil
+          if @subprojects
+          xml.subprojects(type: "tns:ProjectDataArray") {
+            # TODO: figure this one out, get Array of ProjectData
+          }
+          end
+          xml.inherit_global @inherit_global unless @inherit_global == nil
+        end
       }
       builder.doc.root
     end # to_element
+
+    def to_element_string(tag_name)
+      to_element(tag_name).to_s
+    end # to_element_string
   end # ProjectData
 end # Mantis::XSD
 

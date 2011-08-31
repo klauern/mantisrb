@@ -19,6 +19,7 @@ module Mantis
 
     def response(request, params={})
       conn_response = @connection.request request do
+
         soap.body = add_credentials(params)
       end
     end
