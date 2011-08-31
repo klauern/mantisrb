@@ -61,10 +61,11 @@ module Mantis
           #xml.username @user
           #xml.password @pass
         #end
-      #elsif param.class == Hash
+      if param.class == Hash
         param[:username] = @user
         param[:password] = @pass
-      #end
+      end
+      #elsif param.class == 
       param
     end
 
