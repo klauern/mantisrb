@@ -70,5 +70,11 @@ describe "Working With Projects" do
     end
   end # deletion
 
+
+  # Delete out all the projects that I was creating
+  after do
+    clear_projects @session
+  end
+
 end # Working With Projects
 
