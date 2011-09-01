@@ -85,9 +85,6 @@ module Mantis
       p
     end
 
-
-
-
     def unwrap_response(response_hash, method_called)
       method_called += "_response"
       response = response_hash.body[method_called.to_sym][:return]

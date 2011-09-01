@@ -16,5 +16,5 @@ module Mantis
 
     def object_ref_for(obj)
     end
+  end
 end
-

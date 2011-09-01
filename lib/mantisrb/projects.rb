@@ -1,7 +1,6 @@
 require 'pp'
 module Mantis
 
-  
   class Projects
 
     def initialize session
@@ -59,12 +58,13 @@ module Mantis
         Mantis::XSD::ProjectData.new(params).document("project")
     end
 
+    # Remove a project from Mantis with the given @id_num
+    # @return [Boolean] whether deletion was successful
     def delete?(id_num)
       @session.response_trimmed :mc_project_delete, {
         project_id: id_num
       }
     end
-
 
     private
 
@@ -86,6 +86,9 @@ module Mantis
       xml.name(param[:name])
     end
 
+    # User will pass in the name of the param, and this method
+    # will retrieve the correct ObjectRef from Mantis that corresponds
+    # to the name, with id.
     def remap_params_for_project_data(params)
       if params[:status]
         stat = @session.config.project_status_for params[:status]
