@@ -70,6 +70,14 @@ describe "Working With Projects" do
     end
   end # deletion
 
+  describe "listing" do
+
+    it "should return an array of hashes" do
+      skip
+    end
+
+  end
+
 
   # Delete out all the projects that I was creating
   after do
