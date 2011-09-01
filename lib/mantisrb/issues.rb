@@ -29,7 +29,6 @@ module Mantis
       }
     end
 
-
     def add(params)
     end
 
@@ -42,11 +41,9 @@ module Mantis
       }
     end
 
-
     private
 
     def create_issue_object(params)
-
     end
   end
 end

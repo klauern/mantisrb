@@ -39,19 +39,41 @@ describe "Working With Projects" do
     end
 
     it "shouldn't accept incorrect status types" do
-      skip
+      @session.projects.create params={
+        name: random_alphanumeric,
+        status: "somethign that doesn't exist",
+      }.must_throw
+      #skip
     end
 
     it "shouldn't accept incorrect view_states" do
-      skip
+      @session.projects.create params={
+        name: random_alphanumeric,
+        view_state: "something non-existent"
+      }.must_throw
     end
 
     it "shouldn't accept incorrect subprojects" do
-      skip
+      @session.projects.create params={
+        subprojects: "blah blah blah bad"
+      }.must_throw
+    end
+
+    describe "of subprojects" do
+      it "can create projects as subprojects" do
+        skip
+      end
+
+      it "can move subprojects from one to another" do
+        skip
+      end
+
+      it "can have multiple nestings of subprojects" do
+        skip
+      end
     end
 
   end # addition
-
 
   describe "deletion" do
 
