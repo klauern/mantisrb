@@ -39,11 +39,7 @@ def clear_projects(session, except_these=["test"])
   list = session.projects.list
   list.each { |l|
     if list[0].class == Hash and not except_these.member? l[:name]
-      #require 'pry'
-      #binding.pry
-      #if (l[0] == :id)
-        session.projects.delete? l[:id].to_i
-      #end
+      session.projects.delete? l[:id].to_i
     end
   }
 end
