@@ -3,6 +3,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rake/clean'
 require 'rake'
+require 'yard'
 
 CLOBBER.include('pkg')
 
@@ -27,3 +28,8 @@ task :spec do
 end
 
 task :default => [:clobber, :spec, :build]
+
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb', 'spec/**/*.rb'] # optional
+  #t.options = ['--any', '--extra', '--opts'] # optional
+end

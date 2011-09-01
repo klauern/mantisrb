@@ -28,5 +28,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "guard-rake"
   s.add_development_dependency "growl"
   s.add_development_dependency "rb-fsevent"
+  s.add_development_dependency "yard"
+  s.add_development_dependency "rdiscount"
+  s.add_development_dependency "pry"
 
 end
