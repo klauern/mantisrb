@@ -35,7 +35,7 @@ describe "Working With Projects" do
     it "should create a project with only a name" do
       new_project_id = @session.projects.create params={
         name: random_alphanumeric }
-      new_project_id.wont_be_nil
+        new_project_id.wont_be_nil
     end
 
     it "shouldn't accept incorrect status types" do
@@ -50,11 +50,6 @@ describe "Working With Projects" do
       skip
     end
 
-
-    after do
-      projs = @session.projects.list
-      #binding.pry
-    end
   end # addition
 
 
@@ -76,8 +71,7 @@ describe "Working With Projects" do
       skip
     end
 
-  end
-
+  end # listing
 
   # Delete out all the projects that I was creating
   after do
