@@ -38,8 +38,12 @@ end
 def clear_projects(session, except_these=["test"])
   list = session.projects.list
   list.each { |l|
-    unless except_these.any? { |n| n == l[:name] }
-      session.projects.delete? l[:id]
+    if list[0].class == Hash and not except_these.member? l[:name]
+      #require 'pry'
+      #binding.pry
+      #if (l[0] == :id)
+        session.projects.delete? l[:id].to_i
+      #end
     end
   }
 end
