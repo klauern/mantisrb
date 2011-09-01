@@ -23,12 +23,18 @@ describe "Working With Projects" do
   describe "addition" do
     it "should create a new, basic project" do
       new_project_id = @session.projects.create params={
-        :name => "Test_Project",
+        :name => random_alphanumeric,
         :status => "development",
         :enabled => true,
         :view_state => "public",
         :inherit_global => true
       }
+      new_project_id.wont_be_nil
+    end
+
+    it "should create a project with only a name" do
+      new_project_id = @session.projects.create params={
+        name: random_alphanumeric }
       new_project_id.wont_be_nil
     end
 
@@ -43,7 +49,26 @@ describe "Working With Projects" do
     it "shouldn't accept incorrect subprojects" do
       skip
     end
+
+
+    after do
+      projs = @session.projects.list
+      #binding.pry
+    end
   end # addition
+
+
+  describe "deletion" do
+
+    before do
+      @id = @session.projects.create params={
+        name: random_alphanumeric }
+    end
+
+    it "should delete a project with a valid project_id" do
+      @session.projects.delete?(@id).must_equal true
+    end
+  end # deletion
 
 end # Working With Projects
 

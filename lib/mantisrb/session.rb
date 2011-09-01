@@ -18,7 +18,7 @@ module Mantis
     end
 
     def response(request, params={})
-      conn_response = @connection.request request do
+      @connection.request request do
         soap.body = add_credentials(params)
       end
     end
@@ -29,15 +29,15 @@ module Mantis
     end
 
     def config
-      @config ||= Config.new @connection
+      @config ||= Config.new self
     end
 
     def projects
-      @projects ||= Projects.new @connection
+      @projects ||= Projects.new self
     end
 
     def filters
-      @filters ||= Filters.new @connection
+      @filters ||= Filters.new self
     end
 
     def savon_client
@@ -55,14 +55,9 @@ module Mantis
 
     def add_credentials(param)
       if param.class == Nokogiri::XML::Document
-        user = Nokogiri::XML::Node.new "username", param.root
-        user.content = @user
-        pass = Nokogiri::XML::Node.new "password", param.root
-        pass.content = @pass
-        return "#{user.to_s}\n#{pass.to_s}\n#{param.root}"
+        return add_credentials_to_document(param)
       elsif param.class == Hash
-        param[:username] = @user
-        param[:password] = @pass
+        return add_credentials_to_hash(param)
       else
         raise Error, <<-ERR, param
         Incorrect Type.  Must be either Hash or Nokogiri::XML::Document.
@@ -71,6 +66,27 @@ module Mantis
       end
       param
     end
+
+    def add_credentials_to_document(doc)
+      user = Nokogiri::XML::Node.new "username", doc.root
+      user.content = @user
+      pass = Nokogiri::XML::Node.new "password", doc.root
+      pass.content = @pass
+      "#{user.to_s}\n#{pass.to_s}\n#{doc.root}"
+    end
+
+    def add_credentials_to_hash(hash)
+      p = {}
+      p[:username] = @user
+      p[:password] = @pass
+      hash.each_pair { |k,v|
+        p[k] = v
+      }
+      p
+    end
+
+
+
 
     def unwrap_response(response_hash, method_called)
       method_called += "_response"

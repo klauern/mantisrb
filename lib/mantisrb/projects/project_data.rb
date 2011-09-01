@@ -46,8 +46,7 @@ module Mantis::XSD
           end
           xml.file_path @file_path unless @file_path == nil
           xml.description @description unless @description == nil
-          if @subprojects.size > 0
-            puts "There Are Subprojects"
+          if @subprojects
             xml.subprojects(type: "tns:ProjectDataArray") {
               # TODO: figure this one out, get Array of ProjectData
             }

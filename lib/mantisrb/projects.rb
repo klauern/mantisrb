@@ -20,9 +20,9 @@ module Mantis
 
     def issues_by_project_id(id, page=0, per_page=100)
       @session.response_trimmed :mc_project_get_issues, {
-        :project_id => id,
-        :page_number => page,
-        :per_page => per_page
+        project_id: id,
+        page_number: page,
+        per_page: per_page
       }
     end
 
@@ -33,37 +33,38 @@ module Mantis
       # project returned from this call.  If so, we need to wrap and create an array
       # with a Hash to be consistent
       if proj_list[0].class == Array
-        proj_l = []
-        return proj_l << create_project_hash(proj_list) 
+        return [] << create_project_hash(proj_list) 
       end
       proj_list
     end
 
+    # List all accessible projects for this user
+    # @return [Array[Hash]] Array of Hashes for each project you can see
     def list
-      @session.response :mc_projects_get_user_accessible
+      @session.response_trimmed :mc_projects_get_user_accessible
     end
 
     # Create a new Project
+    # @return [Integer] id of the new Project record in Mantis
     def create(params)
-      if params[:status]
-        stat = @session.config.project_status_for params[:status]
-        params[:status] = stat
-      end
-      if params[:view_state]
-        state = @session.config.view_state_for params[:view_state]
-        params[:view_state] = state
-      end
-      if params[:access_min]
-        access = @session.config.access_min params[:access_min]
-        params[:access_min] = access
-      end
-      unless params[:subprojects]
-        params[:subprojects] = {}
-      end
-
+      params = remap_params_for_project_data(params)
       @session.response_trimmed :mc_project_add, 
         Mantis::XSD::ProjectData.new(params).document("project")
     end
+
+    # Update an existing project, given the id and the params
+    def update?(params)
+      params = remap_params_for_project_data(params)
+      @session.response_trimmed :mc_project_update,
+        Mantis::XSD::ProjectData.new(params).document("project")
+    end
+
+    def delete?(id_num)
+      @session.response_trimmed :mc_project_delete, {
+        project_id: id_num
+      }
+    end
+
 
     private
 
@@ -83,6 +84,26 @@ module Mantis
     def object_ref_for(param, xml)
       xml.id(param[:id])
       xml.name(param[:name])
+    end
+
+    def remap_params_for_project_data(params)
+      if params[:status]
+        stat = @session.config.project_status_for params[:status]
+        params[:status] = stat
+      end
+      if params[:view_state]
+        state = @session.config.view_state_for params[:view_state]
+        params[:view_state] = state
+      end
+      if params[:access_min]
+        access = @session.config.access_min params[:access_min]
+        params[:access_min] = access
+      end
+      unless params[:subprojects]
+        # TODO: Map subprojects
+        #params[:subprojects] = {}
+      end
+      params
     end
 
   end
