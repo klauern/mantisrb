@@ -22,6 +22,7 @@ SESSION = Mantis::Session.new URL, USER, PASS
 
 
 def try_project_create
+  binding.pry
   SESSION.projects.create params={
     name: "Test_Project",
     status: "development",
