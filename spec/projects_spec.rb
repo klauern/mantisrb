@@ -116,6 +116,10 @@ describe "Working With Projects" do
       proj = @session.projects.find_by_id @id.to_i
       proj[:id].to_i.must_be_same_as @id.to_i
     end
+
+    it "should return nil if no project is found with a given id" do
+      @session.projects.find_by_id("million").must_be_nil
+    end
   end # listing
 
   # Delete out all the projects that I was creating
