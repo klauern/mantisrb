@@ -36,6 +36,10 @@ module Mantis
       @filters ||= Filters.new self
     end
 
+    def issues
+      @issues ||= Issues.new self
+    end
+
     def savon_client
       @connection
     end
