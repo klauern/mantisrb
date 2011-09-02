@@ -10,6 +10,9 @@ module Mantis
       :custom_fields, :due_date, :monitors
 
     def initialize(params)
+      params.each_key { |p|
+        instance_variable_set("@#{p}", params[p])
+      }
     end
 
     private

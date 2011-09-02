@@ -74,4 +74,4 @@ describe Mantis::Config do
       end
     end # statuses
   end # config
-end
+end # Mantis::Config
