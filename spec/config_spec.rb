@@ -69,5 +69,15 @@ describe Mantis::Session do
     it "access_min should convert :symbol to \"string\"" do
       @session.config.access_min(:viewer).wont_be_empty
     end
+
+
+    describe "statuses" do
+
+      it "should map acknowledged status" do
+        s = @session.config.project_status_for(:release)
+        #binding.pry
+        assert s[:name] == "release"
+      end
+    end # statuses
   end # config
 end

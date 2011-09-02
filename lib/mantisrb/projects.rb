@@ -92,6 +92,7 @@ module Mantis
     def remap_params_for_project_data(params)
       if params[:status]
         stat = @session.config.project_status_for params[:status]
+        #binding.pry
         params[:status] = stat
       end
       if params[:view_state]
@@ -102,7 +103,8 @@ module Mantis
         access = @session.config.access_min params[:access_min]
         params[:access_min] = access
       end
-      unless params[:subprojects]
+      if params[:subprojects]
+        raise 'Subprojects are unsupported at this time'
         # TODO: Map subprojects
         #params[:subprojects] = {}
       end

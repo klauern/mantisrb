@@ -43,7 +43,12 @@ module Mantis
     end
 
     def access_min(level)
-      access_levels.select { |access| access.value? level.to_s }[0] # return first one
+      a = access_levels.select { |access| access.value? level.to_s }[0] # return first one
+      raise <<-ERR if a == nil
+        No access level \"#{level}\" matched possible levels: #{access_levels}
+        Please try again with one of the above
+        ERR
+        a
     end
 
     def project_status
@@ -51,9 +56,13 @@ module Mantis
     end
 
     def project_status_for(status)
-      project_status.select { |stat| stat.value? status.to_s }[0] # return first value
+      s = project_status.select { |stat| stat.value? status.to_s }[0] # return first value
+      raise <<-ERR if s == nil
+        No status \"#{status}\" matched list of project status types.
+        Please ensure that you typed the correct status.
+      ERR
+      s
     end
-
 
     def project_view_states
       @project_view_states ||= @session.response_trimmed :mc_enum_project_view_states
@@ -64,7 +73,11 @@ module Mantis
     end
 
     def view_state_for(state)
-      view_states.select { |s| s.value? state.to_s }[0] # return first value
+      v = view_states.select { |s| s.value? state.to_s }[0] # return first value
+      raise <<-ERR if v == nil
+        No view state for \"#{state}\" found in list: #{view_states}
+        Please try one of the above
+      ERR
     end
 
     def custom_field_types

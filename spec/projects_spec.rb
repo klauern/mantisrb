@@ -38,25 +38,39 @@ describe "Working With Projects" do
         new_project_id.wont_be_nil
     end
 
-    it "shouldn't accept incorrect status types" do
-      @session.projects.create params={
-        name: random_alphanumeric,
-        status: "somethign that doesn't exist",
-      }.must_throw
-      #skip
+    it "shouldn't accept incorrect project status types" do
+      assert_raises RuntimeError do
+        @session.projects.create params={
+          name: random_alphanumeric,
+          status: "something that doesn't exist",
+        }
+      end
     end
 
     it "shouldn't accept incorrect view_states" do
-      @session.projects.create params={
-        name: random_alphanumeric,
-        view_state: "something non-existent"
-      }.must_throw
+      assert_raises RuntimeError do
+        @session.projects.create params={
+          name: random_alphanumeric,
+          view_state: "something non-existent"
+        }
+      end
+    end
+
+    it "shouldn't accept incorrect access minimum level" do
+      assert_raises RuntimeError do
+        @session.projects.create params={
+          name: random_alphanumeric,
+          access_min: "I know this doesn't exist"
+        }
+      end
     end
 
     it "shouldn't accept incorrect subprojects" do
-      @session.projects.create params={
-        subprojects: "blah blah blah bad"
-      }.must_throw
+      assert_raises RuntimeError do
+        @session.projects.create params={
+          subprojects: "blah blah blah bad"
+        }
+      end
     end
 
     describe "of subprojects" do

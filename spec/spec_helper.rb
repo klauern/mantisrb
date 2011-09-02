@@ -1,4 +1,5 @@
 require 'base64'
+require 'pry'
 gem 'minitest'
 %w{ spec unit autorun pride }.each { |w|
   require "minitest/#{w}"
