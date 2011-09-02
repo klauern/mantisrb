@@ -24,6 +24,12 @@ module Mantis
       }
     end
 
+    def find_by_id(project_id)
+      proj_list = list
+      proj_list.select { |proj|
+        proj[:id].to_i == project_id.to_i # returns an array, but should only be one, so we return the first one
+      }[0]
+    end
 
     # Return an Array of project Hashes
     def project_list
@@ -40,7 +46,8 @@ module Mantis
     # List all accessible projects for this user
     # @return [Array[Hash]] Array of Hashes for each project you can see
     def list
-      @session.response_trimmed :mc_projects_get_user_accessible
+      project_list
+      #@session.response_trimmed :mc_projects_get_user_accessible
     end
 
     # Create a new Project

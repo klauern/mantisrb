@@ -103,9 +103,18 @@ describe "Working With Projects" do
   end # deletion
 
   describe "listing" do
+    before do
+      @id = @session.projects.create params={
+        name: random_alphanumeric }
+    end
 
     it "should return an array of hashes" do
       skip
+    end
+
+    it "should load a project if id is known" do
+      proj = @session.projects.find_by_id @id.to_i
+      proj[:id].to_i.must_be_same_as @id.to_i
     end
   end # listing
 
