@@ -1,5 +1,7 @@
-require 'mantisrb/version'
+require 'nokogiri'
+require 'builder'
 require 'savon'
+require 'mantisrb/version'
 require 'mantisrb/session'
 require 'mantisrb/projects/project_data'
 require 'mantisrb/issues'

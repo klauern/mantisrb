@@ -1,5 +1,3 @@
-require 'nokogiri'
-require 'builder'
 
 module Mantis::XSD
 
