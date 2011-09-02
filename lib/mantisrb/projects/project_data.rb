@@ -11,16 +11,12 @@ module Mantis::XSD
       }
     end
 
-    def document(tag_name=nil)
-      if tag_name
-        @doc ||= to_doc(tag_name) 
-      else
-        @doc ||= to_doc
-      end
+    def document(tag_name="project")
+      @doc ||= to_doc(tag_name)
     end
 
     # Creates a Nokogiri::XML::Element object out of this class
-    def to_doc(tag_name="project")
+    def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:ProjectData") do
           xml.id_ @id unless @id == nil

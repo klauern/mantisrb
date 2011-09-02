@@ -24,6 +24,7 @@ module Mantis
       }
     end
 
+
     # Return an Array of project Hashes
     def project_list
       proj_list = @session.response_trimmed :mc_projects_get_user_accessible
