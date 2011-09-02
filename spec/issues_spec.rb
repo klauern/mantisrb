@@ -22,12 +22,11 @@ describe Mantis::Issues do
   end # deleting issues
 
   describe "listing issues" do
-
     it "should retrive an issue by id" do
-      #@issue = @session.issues.find_by_id
-      skip
+      @issue = @session.issues.by_id 1
+      @issue[:id].to_i.must_be_same_as 1
     end
-  end
+  end # listing issues
 
   after do
     #clear_issues @project_id

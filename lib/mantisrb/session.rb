@@ -88,7 +88,8 @@ module Mantis
     def unwrap_response(response_hash, method_called)
       method_called += "_response"
       response = response_hash.body[method_called.to_sym][:return]
-      if response.class == Hash
+      # TODO: need to find out which types have a nested :item {} hash in them
+      if response.class == Hash && response[:item] != nil
         return remove_xsi_type(response[:item])
       end
       return response

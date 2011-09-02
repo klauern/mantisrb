@@ -7,24 +7,23 @@ module Mantis
     end
 
     def by_id(id)
-      @session.response :mc_issue_get, { 
-        id: id }
+      @session.response_trimmed :mc_issue_get, 
+        { issue_id: id }
     end
 
     def exists?(id)
-      @session.response :mc_issue_exists, {
-        issue_id: id
-      }
+      @session.response_trimmed :mc_issue_exists,
+        { issue_id: id }
     end
 
     def by_summary(issue_summary)
-      @session.response :mc_issue_get_id_from_summary, {
+      @session.response_trimmed :mc_issue_get_id_from_summary, {
         summary: issue_summary
       }
     end
 
     def biggest_id_in_project(project_id)
-      @session.response :mc_issue_get_biggest_id, {
+      @session.response_trimmed :mc_issue_get_biggest_id, {
         project_id: project_id
       }
     end
@@ -36,7 +35,7 @@ module Mantis
     end
 
     def delete(issue_id)
-      @session.response :mc_issue_delete, {
+      @session.response_trimmed :mc_issue_delete, {
         issue_id: issue_id
       }
     end
