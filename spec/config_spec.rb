@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 
-describe Mantis::Session do
+describe Mantis::Config do
 
   before do
     @session = create_session
