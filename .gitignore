@@ -3,3 +3,11 @@
 Gemfile.lock
 pkg/*
 *.swp
+bin/coderay
+bin/coderay_stylesheet
+bin/nokogiri
+bin/rackup
+bin/rake2thor
+bin/ruby_parse
+bin/rdiscount
+bin/thor
