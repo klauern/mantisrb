@@ -11,3 +11,5 @@ bin/rake2thor
 bin/ruby_parse
 bin/rdiscount
 bin/thor
+.yardoc
+doc
