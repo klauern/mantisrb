@@ -11,7 +11,7 @@ describe Mantis::Issues do
 
   describe "creating issues" do
     it "should create a simple issue given a project" do
-      
+      skip
     end
   end # creating issues
 
@@ -29,8 +29,8 @@ describe Mantis::Issues do
     end
   end
 
-  #after do
+  after do
     #clear_issues @project_id
-    #clear_projects @session
-  #end
+    clear_projects @session
+  end
 end # Mantis::Issues
