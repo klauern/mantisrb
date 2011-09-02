@@ -51,12 +51,12 @@ module Mantis
         a
     end
 
-    def project_status
+    def project_statuses
       @project_states ||= @session.response_trimmed :mc_enum_project_status
     end
 
     def project_status_for(status)
-      s = project_status.select { |stat| stat.value? status.to_s }[0] # return first value
+      s = project_statuses.select { |stat| stat.value? status.to_s }[0] # return first value
       raise <<-ERR if s == nil
         No status \"#{status}\" matched list of project status types.
         Please ensure that you typed the correct status.
@@ -78,6 +78,7 @@ module Mantis
         No view state for \"#{state}\" found in list: #{view_states}
         Please try one of the above
       ERR
+      v
     end
 
     def custom_field_types

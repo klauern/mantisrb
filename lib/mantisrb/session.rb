@@ -1,6 +1,3 @@
-require 'mantisrb/config'
-require 'mantisrb/projects'
-require 'mantisrb/filters'
 
 module Mantis
 

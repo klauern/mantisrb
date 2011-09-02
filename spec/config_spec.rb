@@ -3,24 +3,20 @@ require_relative 'spec_helper'
 
 describe Mantis::Session do
 
-
   before do
     @session = create_session
   end
 
-
   describe " config" do
-
     it "should retrieve statuses, priorities, severities, and more" do
       %w{ statuses priorities severities reproducibilities 
             version projections etas resolutions access_levels
-            project_status project_view_states view_states
+            project_statuses project_view_states view_states
             custom_field_types }.each { |w|
 
         @session.config.send(w).size.must_be :>=, 1
       }
     end
-
     it "should get the statuses of Mantis we're connecting to" do
       wont_be_nil_for(@session.config.statuses, "acknowledged")
     end
@@ -49,7 +45,7 @@ describe Mantis::Session do
       wont_be_nil_for(@session.config.access_levels, "viewer")
     end
     it "should get the project statuses of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.project_status, "development")
+      wont_be_nil_for(@session.config.project_statuses, "development")
     end
     it "should get the project view states of Mantis we're connecting to" do
       wont_be_nil_for(@session.config.project_view_states, "public")
@@ -70,9 +66,7 @@ describe Mantis::Session do
       @session.config.access_min(:viewer).wont_be_empty
     end
 
-
     describe "statuses" do
-
       it "should map acknowledged status" do
         s = @session.config.project_status_for(:release)
         #binding.pry
