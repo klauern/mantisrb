@@ -21,6 +21,17 @@ Then, when you want to create a session;
 
 From here on out, you can get access to various Mantis components:
 
+Config
+------
+Configuration details about the Mantis installation can be retrieved, such
+as finding out the status types, access levels, and view states:
+
+    session.config.priorities # get priorities
+    session.config.statuses # possible issue statuses
+    session.config.version # Mantis version
+    session.config.access_levels
+
+
 Projects
 --------
 
@@ -30,9 +41,15 @@ Get a list of projects that your user can access:
 
 Create a project:
 
+    project_id = session.projects.create params={
+      name: "project name" 
+    }
+
+Or provide more details (some shown below):
+
     project = session.projects.create {
       name: "project thing",
-      status: session.projects.status.development,
+      status: "development"
       enabled: true,
       view_state: :public # or 'public', or session.projects.status.public,
       inherit_from_global: true

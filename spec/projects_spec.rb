@@ -34,8 +34,9 @@ describe "Working With Projects" do
 
     it "should create a project with only a name" do
       new_project_id = @session.projects.create params={
-        name: random_alphanumeric }
-        new_project_id.wont_be_nil
+        name: random_alphanumeric 
+      }
+      new_project_id.wont_be_nil
     end
 
     it "shouldn't accept incorrect project status types" do
@@ -106,7 +107,6 @@ describe "Working With Projects" do
     it "should return an array of hashes" do
       skip
     end
-
   end # listing
 
   # Delete out all the projects that I was creating
