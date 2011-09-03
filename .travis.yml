@@ -5,3 +5,5 @@ rvm:
 notifications:
   recipients:
     - klauer@gmail.com
+env:
+  JRUBY_OPTS=--1.9
