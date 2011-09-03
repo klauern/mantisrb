@@ -1,4 +1,4 @@
-require 'psych'
+#require 'psych'
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rake/clean'
