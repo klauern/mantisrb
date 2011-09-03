@@ -1,10 +1,10 @@
-MantisRb
+mantisrb [![Build Status](http://travis-ci.org/klauern/mantisrb.png)](http://travis-ci.org/klauern/mantisrb)
 ========
 
-mantisrb is an API that works with the [Savon][1] gem to talk to a [Mantis][2]
+`mantisrb` is an API that works with the [Savon][1] gem to talk to a [Mantis][2]
 bug tracker.  [Mantis][2] provides an API to integrate with it through an older
-SOAP 1.1 interface (sorry) called [MantisConnect][3](see [example][4] for an interactive API browser).  Using this API should make working with an
-external Mantis bug tracker easy(ier).
+SOAP 1.1 interface (sorry) called [MantisConnect][3](see [example][4] for an API view).  
+Using this API should make working with an external Mantis bug tracker easy(ier).
 
 How to use
 ----------
@@ -86,6 +86,18 @@ by project id:
     through things
     session.issues.by_project_id project_id, limit # number of issues to get at
     once
+
+Creating them isn't too bad (know your options):
+
+    issue = session.issues.create {
+      summary: "issue description somewhere here",
+      priority: :high,
+      due_date: "10/13/2011 08:45 AM" # or other formats as DateTime will
+      accept
+    }
+    
+
+
 
 Filters (Mantis equivalent of a saved search)
 ---------------------------------------------
