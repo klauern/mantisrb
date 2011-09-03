@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'nokogiri'
 require 'builder'
 require 'savon'
