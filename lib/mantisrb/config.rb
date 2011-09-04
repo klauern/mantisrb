@@ -119,10 +119,10 @@ module Mantis
       @custom_field_types ||= @session.response_trimmed :mc_enum_custom_field_types
     end
 
-    # instead of writing an individual <some_config_type>_for(type), create
+    # instead of writing an individual <some_config_type>_for(value), create
     # a meta-method that will just retrieve the actual ObjectRef for the type
     # and the known value for it.
-    def map_value_to_object_ref_for(type, value)
+    def object_ref_for_value(type, value)
       meth = VALUE_TO_METHOD[type]
       if meth
         vals = self.send(meth)
@@ -142,7 +142,6 @@ module Mantis
         #No value found with #{value} for type #{type}.
       #ERR
     end
-
   end # Config
 end # Mantis
 

@@ -90,7 +90,7 @@ describe Mantis::Config do
       }
       meth_to_val.each { |k,v| 
         it "should find a list of ObjectRef Type for #{k}" do
-          refute_nil @session.config.map_value_to_object_ref_for(k,v)
+          refute_nil @session.config.object_ref_for_value(k,v)
         end
       }
 
