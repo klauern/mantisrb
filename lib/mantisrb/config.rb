@@ -13,6 +13,7 @@ module Mantis
       access_level: :access_levels,
       access_min: :access_min,
       project_status: :project_statuses,
+      project_view_state: :project_view_states,
       view_state: :view_states,
       custom_field_type: :custom_field_types
     }
@@ -131,12 +132,15 @@ module Mantis
           No #{type.to_s} known with value #{value}. None found in #{vals}.
           Please ensure that you have entered the correct value for your type.
         ERR
-        return v
+        return val
       else
         raise <<-ERR
           No type, #{type} known.  Be sure it's one of #{VALUE_TO_METHOD.keys}
           ERR
       end
+      raise <<-ERR
+        No value found with #{value} for type #{type}.
+      ERR
     end
 
   end # Config

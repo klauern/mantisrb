@@ -73,5 +73,26 @@ describe Mantis::Config do
         assert s[:name] == "release"
       end
     end # statuses
+
+    describe "meta-method mapping" do
+      it "should find a list of ObjectRef types for the following values:" do
+        meth_to_val = { status: :acknowledged,
+                        priority: :none,
+                        severity: :feature,
+                        reproducibility: :always,
+                        projection: :none,
+                        eta: :none,
+                        resolution: :open,
+                        access_level: :viewer,
+                        project_status: :development,
+                        project_view_state: :public,
+                        view_state: :public,
+                        custom_field_type: :Numeric
+        }
+        meth_to_val.each { |k,v|
+          refute_nil @session.config.map_value_to_object_ref_for(k,v)
+        }
+      end
+    end # meta-method mapping
   end # config
 end # Mantis::Config
