@@ -4,6 +4,7 @@ describe "Working With Projects" do
 
   before do
     @session = create_session
+    @projects = []
   end
 
   describe "getting info" do
@@ -30,6 +31,7 @@ describe "Working With Projects" do
         :inherit_global => true
       }
       new_project_id.wont_be_nil
+      @projects << new_project_id
     end
 
     it "should create a project with only a name" do
@@ -37,6 +39,7 @@ describe "Working With Projects" do
         name: random_alphanumeric 
       }
       new_project_id.wont_be_nil
+      @projects << new_project_id
     end
 
     it "shouldn't accept incorrect project status types" do
@@ -95,10 +98,22 @@ describe "Working With Projects" do
     before do
       @id = @session.projects.create params={
         name: random_alphanumeric }
+      @projects << @id
     end
 
     it "should delete a project with a valid project_id" do
       @session.projects.delete?(@id).must_equal true
+      @projects.delete @id
+    end
+
+    it "should delete a project with a string project_id" do
+      @session.projects.delete?(@id.to_s).must_equal true
+      @projects.delete @id
+    end
+
+    it "should delete a project with an integer project_id" do
+      @session.projects.delete?(@id.to_i).must_equal true
+      @projects.delete @id
     end
   end # deletion
 
@@ -106,6 +121,7 @@ describe "Working With Projects" do
     before do
       @id = @session.projects.create params={
         name: random_alphanumeric }
+      @projects << @id
     end
 
     it "should return an array of hashes" do
@@ -124,7 +140,9 @@ describe "Working With Projects" do
 
   # Delete out all the projects that I was creating
   after do
-    clear_projects @session
+    #clear_projects @session
+
+    remove_given_projects(@session, @projects)
   end
 
 end # Working With Projects

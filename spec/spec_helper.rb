@@ -44,3 +44,9 @@ def clear_projects(session, except_these=["test"])
     end
   }
 end
+
+def remove_given_projects(session, list)
+  list.each { |l|
+    session.projects.delete? l.to_i
+  }
+end

@@ -3,9 +3,12 @@ require_relative 'spec_helper'
 describe Mantis::Issues do
   
   before do
+    @projects = []
+    @issues_list = []
     @session = create_session
     @project_id = @session.projects.create params={
       name: random_alphanumeric }
+    @projects << @project_id
     @project = @session.projects.find_by_id(@project_id)
   end
 
@@ -30,6 +33,7 @@ describe Mantis::Issues do
 
   after do
     #clear_issues @project_id
-    clear_projects @session
+    #clear_projects @session
+    remove_given_projects(@session, @projects) if @projects # should be empty anyway
   end
 end # Mantis::Issues
