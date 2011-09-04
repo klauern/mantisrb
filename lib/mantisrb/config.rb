@@ -2,6 +2,21 @@ module Mantis
 
   class Config
 
+    VALUE_TO_METHOD = { 
+      reproducibility: :reproducibilities,
+      status: :statuses,
+      priority: :priorities,
+      severity: :severities,
+      projection: :projections,
+      eta: :etas,
+      resolution: :resolutions,
+      access_level: :access_levels,
+      access_min: :access_min,
+      project_status: :project_statuses,
+      view_state: :view_states,
+      custom_field_type: :custom_field_types
+    }
+
     def initialize(session)
       @session = session
     end
@@ -108,20 +123,6 @@ module Mantis
     # and the known value for it.
     # TODO: Not tested at all.  Fix that.
     def map_value_to_object_ref_for(type, value)
-      VALUE_TO_METHOD = { 
-        reproducibility: :reproducibilities,
-        status: :statuses,
-        priority: :priorities,
-        severity: :severities,
-        projection: :projections,
-        eta: :etas,
-        resolution: :resolutions,
-        access_level: :access_levels,
-        access_min: :access_min,
-        project_status: :project_statuses,
-        view_state: :view_states,
-        custom_field_type: :custom_field_types
-      }
       meth = VALUE_TO_METHOD[type]
       if meth
         vals = self.send(meth)
@@ -134,7 +135,7 @@ module Mantis
       else
         raise <<-ERR
           No type, #{type} known.  Be sure it's one of #{VALUE_TO_METHOD.keys}
-        ERR
+          ERR
       end
     end
 
