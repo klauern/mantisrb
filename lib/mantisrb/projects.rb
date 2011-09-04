@@ -52,11 +52,13 @@ module Mantis
 
     # Create a new Project
     # @return [Integer] id of the new Project record in Mantis
-    def create(params)
+    def add(params)
       params = remap_params_for_project_data(params)
       @session.response_trimmed :mc_project_add, 
         Mantis::XSD::ProjectData.new(params).document("project")
     end
+
+    alias :create :add
 
     # Update an existing project, given the id and the params
     def update?(params)

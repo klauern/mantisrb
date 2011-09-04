@@ -10,6 +10,15 @@ module Mantis
       @statuses ||= @session.response_trimmed :mc_enum_status
     end
 
+    def status_for(status)
+      s = statuses.select { |stat| stat.value? status.to_s }[0] # return first value
+      raise <<-ERR if s == nil
+        No status \"#{status}\" matched list of issue status types.
+        Please ensure that you typed the correct status.
+      ERR
+      s
+    end
+
     def priorities
       @priorities ||= @session.response_trimmed :mc_enum_priorities
     end
@@ -21,6 +30,17 @@ module Mantis
     def reproducibilities
       @reproducibilities ||= @session.response_trimmed :mc_enum_reproducibilities
     end
+
+    def reproducibility_for(reproducibility)
+      r = reproducibilities.select { |stat| stat.value? reproducibility.to_s }[0] # return first value
+      raise <<-ERR if r == nil
+        No status \"#{status}\" matched list of reproducibilities.
+        Please ensure that you typed the correct type.
+      ERR
+      r
+    end
+
+
 
     def version
       @version ||= @session.response_trimmed :mc_version

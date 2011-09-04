@@ -29,7 +29,12 @@ module Mantis
     end
 
     def add(params)
+      params = ramap_params_for_issue_data(params)
+      @session.response_trimmed :mc_issue_add,
+        Mantis::XSD::IssueData.new(params).document("issue")
     end
+
+    alias :create :add
 
     def update(issue_id, params)
     end
@@ -42,7 +47,22 @@ module Mantis
 
     private
 
-    def create_issue_object(params)
-    end
+    # User will pass in the name of a param, and this method will retrieve all
+    # possible ObjectRef, AccountData, Attachments, Notes, and other types,
+    # constructing the proper IssueData class
+    def remap_params_for_issue_data(params)
+      if params[:view_state]
+        view_state = @session.config.view_state_for(params[:view_state])
+        params[:view_state] = view_state
+      end
+      if params[:status]
+        status = @session.config.status_for params[:status]
+        params[:status] = status
+      end
+      if params[:reproducibility]
+        rep = @session.config.reproducibility_for params[:reproducibility]
+        params[:reproducibility] = rep
+      end
+    end # remap_params_for_issue_data
   end
 end
