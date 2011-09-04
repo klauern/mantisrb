@@ -25,7 +25,7 @@ describe "Working With Projects" do
     it "should create a new, basic project" do
       new_project_id = @session.projects.create params={
         :name => random_alphanumeric,
-        :status => "development",
+        :project_status => "development",
         :enabled => true,
         :view_state => "public",
         :inherit_global => true

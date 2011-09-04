@@ -57,19 +57,22 @@ describe Mantis::Config do
       wont_be_nil_for(@session.config.custom_field_types, "Numeric")
     end
     it "project_status_for should convert :symbol to \"string\"" do
-      @session.config.project_status_for(:development).wont_be_empty
+      #@session.config.project_status_for(:development).wont_be_empty
+      @session.config.object_ref_for_value(:project_status, :development).wont_be_empty
     end
     it "view_state_for should convert :symbol to \"string\"" do
-      @session.config.view_state_for(:public).wont_be_empty
+      #@session.config.view_state_for(:public).wont_be_empty
+      @session.config.object_ref_for_value(:view_state, :public).wont_be_empty
     end
     it "access_min should convert :symbol to \"string\"" do
-      @session.config.access_min(:viewer).wont_be_empty
+      #@session.config.access_min(:viewer).wont_be_empty
+      @session.config.object_ref_for_value(:access_min, :viewer).wont_be_empty
     end
 
     describe "statuses" do
       it "should map acknowledged status" do
-        s = @session.config.project_status_for(:release)
-        #binding.pry
+        #s = @session.config.project_status_for(:release)
+        s = @session.config.object_ref_for_value(:project_status, :release)
         assert s[:name] == "release"
       end
     end # statuses
@@ -94,9 +97,6 @@ describe Mantis::Config do
         end
       }
 
-      it "should return nil if it tries to map a nonexistent type" do
-        must_be_nil @session.config.object_ref_for_value(:useless,:unknown)
-      end
     end # meta-method mapping
   end # config
 end # Mantis::Config

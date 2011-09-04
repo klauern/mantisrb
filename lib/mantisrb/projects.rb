@@ -99,24 +99,30 @@ module Mantis
     # will retrieve the correct ObjectRef from Mantis that corresponds
     # to the name, with id.
     def remap_params_for_project_data(params)
-      if params[:status]
-        stat = @session.config.project_status_for params[:status]
-        #binding.pry
-        params[:status] = stat
-      end
-      if params[:view_state]
-        state = @session.config.view_state_for params[:view_state]
-        params[:view_state] = state
-      end
-      if params[:access_min]
-        access = @session.config.access_min params[:access_min]
-        params[:access_min] = access
-      end
-      if params[:subprojects]
-        raise 'Subprojects are unsupported at this time'
-        # TODO: Map subprojects
-        #params[:subprojects] = {}
-      end
+      %w{ status view_state access_min subprojects }.each { |p|
+        if (params[p.to_sym])
+          stat = @session.config.object_ref_for_value(p.to_sym,params[p.to_sym])
+          params[p.to_sym] = stat
+        end
+      }
+      #if params[:status]
+        #stat = @session.config.project_status_for params[:status]
+        ##binding.pry
+        #params[:status] = stat
+      #end
+      #if params[:view_state]
+        #state = @session.config.view_state_for params[:view_state]
+        #params[:view_state] = state
+      #end
+      #if params[:access_min]
+        #access = @session.config.access_min params[:access_min]
+        #params[:access_min] = access
+      #end
+      #if params[:subprojects]
+        #raise 'Subprojects are unsupported at this time'
+        ## TODO: Map subprojects
+        ##params[:subprojects] = {}
+      #end
       params
     end
 

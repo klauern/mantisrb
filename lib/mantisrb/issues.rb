@@ -51,18 +51,24 @@ module Mantis
     # possible ObjectRef, AccountData, Attachments, Notes, and other types,
     # constructing the proper IssueData class
     def remap_params_for_issue_data(params)
-      if params[:view_state]
-        view_state = @session.config.view_state_for(params[:view_state])
-        params[:view_state] = view_state
-      end
-      if params[:status]
-        status = @session.config.status_for params[:status]
-        params[:status] = status
-      end
-      if params[:reproducibility]
-        rep = @session.config.reproducibility_for params[:reproducibility]
-        params[:reproducibility] = rep
-      end
+      %w{ view_state status reproducibility }.each { |parm|
+        if(params[parm.to_sym])
+          val = @session.config.object_ref_for_value(parm, params[parm.to_sym])
+          params[parm.to_sym] = val
+        end
+      }
+      #if params[:view_state]
+        #view_state = @session.config.view_state_for(params[:view_state])
+        #params[:view_state] = view_state
+      #end
+      #if params[:status]
+        #status = @session.config.status_for params[:status]
+        #params[:status] = status
+      #end
+      #if params[:reproducibility]
+        #rep = @session.config.reproducibility_for params[:reproducibility]
+        #params[:reproducibility] = rep
+      #end
     end # remap_params_for_issue_data
   end
 end
