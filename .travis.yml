@@ -1,9 +1,6 @@
 rvm: 
   - 1.9.2
-  #- jruby
-  #- 1.9.3
+  - 1.9.3
 notifications:
   recipients:
     - klauer@gmail.com
-#env:
-  #JRUBY_OPTS=--1.9
