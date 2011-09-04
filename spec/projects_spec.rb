@@ -7,7 +7,7 @@ describe "Working With Projects" do
     @projects = []
   end
 
-  describe "getting info" do
+  describe "Getting Info" do
     it "should get a project list if there are projects" do
       proj_list = @session.projects.project_list
       unless proj_list == nil
@@ -21,7 +21,7 @@ describe "Working With Projects" do
 
   end # getting info
 
-  describe "addition" do
+  describe "Addition" do
     it "should create a new, basic project" do
       new_project_id = @session.projects.create params={
         :name => random_alphanumeric,
@@ -77,7 +77,7 @@ describe "Working With Projects" do
       end
     end
 
-    describe "of subprojects" do
+    describe "Of Subprojects" do
       it "can create projects as subprojects" do
         skip
       end
@@ -93,7 +93,7 @@ describe "Working With Projects" do
 
   end # addition
 
-  describe "deletion" do
+  describe "Deletion" do
 
     before do
       @id = @session.projects.create params={
@@ -140,8 +140,6 @@ describe "Working With Projects" do
 
   # Delete out all the projects that I was creating
   after do
-    #clear_projects @session
-
     remove_given_projects(@session, @projects)
   end
 
