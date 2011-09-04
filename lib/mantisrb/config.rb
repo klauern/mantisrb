@@ -122,7 +122,6 @@ module Mantis
     # instead of writing an individual <some_config_type>_for(type), create
     # a meta-method that will just retrieve the actual ObjectRef for the type
     # and the known value for it.
-    # TODO: Not tested at all.  Fix that.
     def map_value_to_object_ref_for(type, value)
       meth = VALUE_TO_METHOD[type]
       if meth
@@ -133,14 +132,15 @@ module Mantis
           Please ensure that you have entered the correct value for your type.
         ERR
         return val
-      else
-        raise <<-ERR
-          No type, #{type} known.  Be sure it's one of #{VALUE_TO_METHOD.keys}
-          ERR
       end
-      raise <<-ERR
-        No value found with #{value} for type #{type}.
-      ERR
+      #else
+        #raise <<-ERR
+          #No type, #{type} known.  Be sure it's one of #{VALUE_TO_METHOD.keys}
+          #ERR
+      #end
+      #raise <<-ERR
+        #No value found with #{value} for type #{type}.
+      #ERR
     end
 
   end # Config

@@ -93,6 +93,10 @@ describe Mantis::Config do
           refute_nil @session.config.map_value_to_object_ref_for(k,v)
         end
       }
+
+      it "should return nil if it tries to map a nonexistent type" do
+        must_be_nil @session.config.map_value_to_object_ref_for(:useless,:unknown)
+      end
     end # meta-method mapping
   end # config
 end # Mantis::Config
