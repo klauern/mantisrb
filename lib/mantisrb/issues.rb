@@ -29,7 +29,7 @@ module Mantis
     end
 
     def add(params)
-      params = ramap_params_for_issue_data(params)
+      params = remap_params_for_issue_data(params)
       @session.response_trimmed :mc_issue_add,
         Mantis::XSD::IssueData.new(params).document("issue")
     end
@@ -39,7 +39,7 @@ module Mantis
     def update(issue_id, params)
     end
 
-    def delete(issue_id)
+    def delete?(issue_id)
       @session.response_trimmed :mc_issue_delete, {
         issue_id: issue_id
       }
@@ -57,6 +57,14 @@ module Mantis
           params[parm.to_sym] = val
         end
       }
+      if params[:project]
+        list = @session.projects.list
+        # this allows both an id and a name to be passed in, since it's looking
+        # at all values to match EXACTLY the value passed in.
+        project = list.select { |l| l.value? params[:project].to_s}[0]
+        params[:project] = project
+      end
+      params
       #if params[:view_state]
         #view_state = @session.config.view_state_for(params[:view_state])
         #params[:view_state] = view_state

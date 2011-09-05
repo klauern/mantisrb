@@ -45,8 +45,16 @@ def clear_projects(session, except_these=["test"])
   }
 end
 
+# Useful for clearing out a list of projects by id name
 def remove_given_projects(session, list)
   list.each { |l|
     session.projects.delete? l.to_i
+  }
+end
+
+# Useful for clearing out a list of issues by id name
+def remove_given_issues(session, list)
+  list.each { |l|
+    session.issues.delete? l.to_i
   }
 end

@@ -14,13 +14,26 @@ describe Mantis::Issues do
 
   describe "creating issues" do
     it "should create a simple issue given a project" do
-      skip
+      id = @session.issues.add params={
+        project: 45,
+        summary: "Some Summary Description",
+        description: "More Detailed Response will go here",
+        category: "General" # Assuming it's part of all projects
+      }
+      wont_be_nil id
+      @issues_list << id
     end
   end # creating issues
 
   describe "deleting issues" do
     it "should delete an issue with an id" do
-      skip
+      id = @session.issues.add params={
+        project: 45, # test has been defined by it for now, should refactor it out
+        summary: random_alphanumeric,
+        description: random_alphanumeric(256),
+        category: "General"
+      }
+      @session.issues.delete?(id).must_equal true
     end
   end # deleting issues
 
@@ -35,5 +48,6 @@ describe Mantis::Issues do
     #clear_issues @project_id
     #clear_projects @session
     remove_given_projects(@session, @projects) if @projects # should be empty anyway
+    remove_given_issues(@session, @issues_list) if @issues_list
   end
 end # Mantis::Issues
