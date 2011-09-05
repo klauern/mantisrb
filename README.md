@@ -6,27 +6,19 @@ bug tracker.  [Mantis][2] provides an API to integrate with it through an older
 SOAP 1.1 interface (sorry) called [MantisConnect][3](see [example][4] for an API view).  
 Using this API should make working with an external Mantis bug tracker easy(ier).
 
-Compatibility
--------------
-You can see which environments have been tested on [Travis CI][travis].  JRuby support 
-is lacking, as it appears there might be an issue with [Nokogiri][nok] and 
-[Savon][sav] gems (to be determined).  Any help in getting JRuby to work (w/
-JRUBY_OPTS=--1.9) would be greatly appreciated.
-
-
-How to use
-----------
-Using mantisrb is pretty straightforward.  First, install the gem:
+Usage
+-----
+Install:
 
     gem install mantisrb
 
-Then, when you want to create a session;
+Create a session to the Mantis server:
 
     require 'mantisrb'
 
     session = Mantis:Session.new "http://mantisurl.com/mantis", "Username", "Password"
 
-From here on out, you can get access to various Mantis components:
+Various components are described below:
 
 Config
 ------
@@ -38,6 +30,7 @@ as finding out the status types, access levels, and view states:
     session.config.version # Mantis version
     session.config.access_levels
 
+More information on this can be found in {Mantis::Config}.
 
 Projects
 --------
@@ -65,7 +58,7 @@ Or provide more details (some shown below):
     project.id    # 10 or whatever for referencing
     project......
 
-More details on what is in a project can be found in Mantis::XSD::ProjectData.
+More details on what is in a project can be found in {Mantis::XSD::ProjectData}.
 
 ### Categories in Projects
 Categories in projects can be manipulated and retrieved.  When creating issues,
@@ -138,6 +131,8 @@ Required fields for an issue:
   - category name (you can get this from the project)
     
 
+Information on what is in an Issue can be found in the {Mantis::XSD::IssueData}
+class.
 
 
 Filters (Mantis equivalent of a saved search)
@@ -160,21 +155,30 @@ Get issues for a particular filter:
     # fully-formatted search
 
 
+Compatibility
+-------------
+You can see which environments have been tested on [Travis CI][travis].  JRuby support 
+is lacking, as it appears there might be an issue with [Nokogiri][nok] and 
+[Savon][sav] gems (to be determined).  Any help in getting JRuby to work (w/
+JRUBY_OPTS=--1.9) would be greatly appreciated.
+
+
 License, Open-Source-ness, and other Miscellany
 ===============================================
 I've licensed `mantisrb` with the [MIT License][5], which should be permissive
-enough for you to muck around with and fiddle with.  It's open-source, so
+enough for you to muck around and fiddle with.  It's open-source, so
 contributions are welcomed and encouraged.
+
+For any questions / suggestions / contributions, contact me at:
 
 Email: klauer - at - gmail - dot - com for more information or send me a pull-request.
 
-Any questions on this as well, I'm all ears.  I hope to provide a useful gem
-that someone might make use of for their own projects.
 
  [1]: http://www.savonrb.com
  [2]: http://www.mantisbt.org
  [3]: http://www.futureware.biz/mantisconnect/concept.php
  [4]: http://www.mantisbt.org/demo/api/soap/mantisconnect.php
+ [5]: http://www.opensource.org/licenses/mit-license.php
  [6]: http://www.mantisbt.org/blog/?p=6
  [nok]: http://nokogiri.org/Nokogiri/XML/Builder.html
  [sav]: http://www.savonrb.com/

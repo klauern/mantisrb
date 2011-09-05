@@ -26,7 +26,7 @@ end
 task :default => [:clobber, :spec, :build]
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb', 'spec/**/*.rb', ] # optional
+  t.files   = ['lib/**/*.rb' ] # optional
   t.options= [ '--files', 'LICENSE' ]
   #t.options = ['--any', '--extra', '--opts'] # optional
 end
