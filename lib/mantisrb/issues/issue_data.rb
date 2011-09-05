@@ -9,7 +9,7 @@ module Mantis::XSD
       :additional_information, :attachments, :relationships, :notes, 
       :custom_fields, :due_date, :monitors
 
-    def initialize(params)
+    def initialize(params={})
       params.each_key { |p|
         instance_variable_set("@#{p}", params[p])
       }
