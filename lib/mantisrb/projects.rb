@@ -75,6 +75,36 @@ module Mantis
       }
     end
 
+    # Get a list of all categories a project has
+    def categories(project_id)
+      @session.response :mc_project_get_categories, {
+        project_id: project_id
+      }
+    end
+
+    # Add a new category name to an existing project
+    def add_category(project_id, name)
+      @session.response_trimmed :mc_project_add_category, {
+        project_id: project_id,
+        p_category_name: name
+      }
+    end
+
+    # Delete a known category by name from an existing project
+    def delete_category(project_id, name)
+      @session.response_trimmed :mc_project_delete_category, {
+        project_id: project_id,
+        p_category_name: name
+      }
+    end
+
+    # Rename a category in a project, and optionally put it in a new
+    # project.
+    def rename_category(params)
+      hash = rename_category_hash(params)
+      @session.response_trimmed :mc_project_rename_category_by_name, hash
+    end
+
     private
 
     # The SOAP response from MantisConnect is an array of
@@ -105,27 +135,36 @@ module Mantis
           params[p.to_sym] = stat
         end
       }
-      #if params[:status]
-        #stat = @session.config.project_status_for params[:status]
-        ##binding.pry
-        #params[:status] = stat
-      #end
-      #if params[:view_state]
-        #state = @session.config.view_state_for params[:view_state]
-        #params[:view_state] = state
-      #end
-      #if params[:access_min]
-        #access = @session.config.access_min params[:access_min]
-        #params[:access_min] = access
-      #end
-      #if params[:subprojects]
-        #raise 'Subprojects are unsupported at this time'
-        ## TODO: Map subprojects
-        ##params[:subprojects] = {}
-      #end
+      # TODO: Map subprojects
       params
     end
 
-  end
-end
+
+    # Create the correct hash for calling a rename category
+    def rename_category_hash(params)
+      if params != Hash
+        raise <<-ERR
+        Parameters not passed in as a Hash
+        ERR
+      end
+      unless params[:project_id] && params[:old_category] &&
+             params[:new_category]
+        raise <<-ERR
+        Did not pass in all necessary parameters.  Need:
+          - :project_id
+          - :old_category
+          - :new_category
+          - :project_assigned_to (optional)
+        ERR
+      end
+      hash = {
+        project_id: params[:project_id],
+        p_category_name: params[:old_category],
+        p_category_name_new: params[:new_category],
+      }
+      hash[:p_assigned_to] = params[:project_assigned_to] if params[:project_assigned_to]
+      hash
+    end # map_category_hash
+  end # Projects
+end # Mantis
 

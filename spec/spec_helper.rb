@@ -26,14 +26,12 @@ def wont_be_nil_for(response, expectation)
   response.select { |x| x.value? expectation }.wont_be_nil
 end
 
-
 # Gleaned from DZone: http://snippets.dzone.com/posts/show/2111
 def random_alphanumeric(size=16)
   s = ""
   size.times { s << (i = Kernel.rand(62); i += ((i<10) ? 48 : ((i< 36) ? 55 : 61))).chr }
   s
 end
-
 
 # remove all projects from remote server except ones matching these names
 def clear_projects(session, except_these=["test"])
@@ -56,5 +54,11 @@ end
 def remove_given_issues(session, list)
   list.each { |l|
     session.issues.delete? l.to_i
+  }
+end
+
+def remove_categories_from_project(project_id, categories)
+  categories.each { |cat|
+    session.projects.remove_category(project_id, cat)
   }
 end

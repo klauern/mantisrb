@@ -5,11 +5,12 @@ describe "Working With Projects" do
   before do
     @session = create_session
     @projects = []
+    @category_hash = {} # Hash of project_id to array of categories to clean up afterwards
   end
 
   describe "Getting Info" do
     it "should get a project list if there are projects" do
-      proj_list = @session.projects.project_list
+      proj_list = @session.projects.list
       unless proj_list == nil
         @session.projects.project_list.class.must_be :==, Array
         %w{ id name status enabled view_state access_min 
@@ -18,8 +19,26 @@ describe "Working With Projects" do
         }
       end
     end 
-
   end # getting info
+
+  describe "Categories" do
+    it "should get the categories for a project" do
+      proj = @session.projects.list[0]
+      @session.projects.categories(proj[:id]).wont_be_nil
+    end
+
+    it "should create a new category in a known project" do
+      skip
+    end
+
+    it "should delete an existing category in a known project" do
+      skip
+    end
+
+    it "should rename a category in a known project" do
+      skip
+    end
+  end # Projects :: Categories
 
   describe "Addition" do
     it "should create a new, basic project" do
