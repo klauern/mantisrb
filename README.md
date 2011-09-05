@@ -48,7 +48,7 @@ Get a list of projects that your user can access:
 Create a project:
 
     project_id = session.projects.create params={
-      name: "project name" 
+      name: "project name"  # Minimally, this is all you need
     }
 
 Or provide more details (some shown below):
@@ -64,6 +64,36 @@ Or provide more details (some shown below):
     project.name  # "project thing"
     project.id    # 10 or whatever for referencing
     project......
+
+More details on what is in a project can be found in Mantis::XSD::ProjectData.
+
+### Categories in Projects
+Categories in projects can be manipulated and retrieved.  When creating issues,
+you will need to know what category the issue belongs to, so this should be
+helpful.
+
+Get all categories for a project:
+
+    session.projects.categories(project_id)
+
+Add a category
+
+    session.projects.add_category(45, "Triage")
+    session.projects.add_category(<project_id>, <category_name>)
+
+Delete a category
+
+    session.projects.delete_category(<project_id>, <category_name>)
+
+Rename a category
+
+    session.projects.rename_category params={
+      project_id: <id>,
+      old_category: <category_name>,
+      new_category: <new_category_name>,
+      project_assigned_to: <id> # leaving this out will keep it in the same
+      project
+    }
 
 Issues
 ------
@@ -100,6 +130,12 @@ Creating them isn't too bad (know your options):
       due_date: "10/13/2011 08:45 AM" # or other formats as DateTime will
       accept
     }
+
+Required fields for an issue:
+  - project (`id` or `name` of project will work)
+  - summary
+  - description
+  - category name (you can get this from the project)
     
 
 

@@ -5,6 +5,7 @@ require 'rake'
 require 'yard'
 
 CLOBBER.include('pkg')
+CLOBBER.include('doc')
 
 Rake::TestTask.new do |t|
   t.pattern = "spec/*_spec.rb"
@@ -25,6 +26,7 @@ end
 task :default => [:clobber, :spec, :build]
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb', 'spec/**/*.rb'] # optional
+  t.files   = ['lib/**/*.rb', 'spec/**/*.rb', ] # optional
+  t.options= [ '--files', 'LICENSE' ]
   #t.options = ['--any', '--extra', '--opts'] # optional
 end
