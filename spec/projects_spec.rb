@@ -19,6 +19,10 @@ describe "Working With Projects" do
         }
       end
     end 
+
+    it "should generate a project if given an id" do
+      skip
+    end
   end # getting info
 
   describe "Categories" do
@@ -108,9 +112,9 @@ describe "Working With Projects" do
       it "can have multiple nestings of subprojects" do
         skip
       end
-    end
+    end # Subprojects
 
-  end # addition
+  end # Addition
 
   describe "Deletion" do
 
