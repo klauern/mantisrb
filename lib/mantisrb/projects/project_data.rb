@@ -1,14 +1,24 @@
+require 'ostruct'
+require 'delegate'
+
 module Mantis::XSD
 
   class ProjectData
     attr_accessor :name, :status, :enabled, :view_state, :inherit_global
     attr_accessor :access_min, :file_path, :description, :subprojects
     attr_reader :id
+    
 
     def initialize(params)
       params.each_key { |p|
         instance_variable_set("@#{p}", params[p])
       }
+    end
+
+    def [](val)
+    end
+
+    def []=(key,val)
     end
 
     def document(tag_name="project")
@@ -56,6 +66,7 @@ module Mantis::XSD
     def to_element_string(tag_name)
       document(tag_name).root.to_s
     end # to_element_string
+
   end # ProjectData
 end # Mantis::XSD
 
