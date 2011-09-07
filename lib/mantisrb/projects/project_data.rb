@@ -69,4 +69,3 @@ module Mantis::XSD
 
   end # ProjectData
 end # Mantis::XSD
-

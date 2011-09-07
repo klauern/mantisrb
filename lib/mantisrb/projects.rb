@@ -24,6 +24,14 @@ module Mantis
       }
     end
 
+    def issue_headers_by_project_id(id, page=0, per_page=100)
+      @session.response_trimmed :mc_project_get_issue_headers, {
+        project_id: id,
+        page_number: page,
+        per_page: per_page
+      }
+    end
+
     def find_by_id(project_id)
       proj_list = list
       proj_list.select { |proj|
@@ -103,6 +111,13 @@ module Mantis
     def rename_category(params)
       hash = rename_category_hash(params)
       @session.response_trimmed :mc_project_rename_category_by_name, hash
+    end
+
+    # TODO: Test this with actual custom fields
+    def custom_fields_for(id_num)
+      @session.response_trimmed :mc_project_get_custom_fields, {
+        projec_id: id_num
+      }
     end
 
     private
