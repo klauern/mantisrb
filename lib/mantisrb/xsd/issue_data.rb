@@ -29,7 +29,6 @@ module Mantis::XSD
     end
 
     def to_doc(tag_name)
-      # TODO: surround conditional 
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:IssueData") do
           xml.id_ @id if @id

@@ -14,13 +14,13 @@ module Mantis::XSD
     # Let's say ObjectRef is id: 10, name: "public", and you want
     # to generate the XMl for it under the <style> attribute:
     #
-    # to_xml "style"  # should yield
+    # to_doc "style"  # should yield
     #
     # <status type="tns:ObjectRef">
     #   <id>10</id>
     #   <name>public</name>
     # </status>
-    def to_xml(element_name)
+    def to_doc(element_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(element_name, type: "tns:ObjectRef") do 
           xml.id_ @id
