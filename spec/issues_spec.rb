@@ -25,6 +25,12 @@ describe Mantis::Issues do
     end
   end # creating issues
 
+  describe "updating issues" do
+    it "should update an issue if it exists" do
+      skip
+    end
+  end # updating issues
+
   describe "deleting issues" do
     it "should delete an issue with an id" do
       id = @session.issues.add params={
@@ -38,9 +44,19 @@ describe Mantis::Issues do
   end # deleting issues
 
   describe "listing issues" do
-    it "should retrive an issue by id" do
+    it "should retrieve an issue by id" do
+      @issue = @session.issues.by_id 1
+      wont_be_nil @issue
+    end
+
+    it "should retrieve issue componetns by issue[:parameter] lookup" do
       @issue = @session.issues.by_id 1
       @issue[:id].to_i.must_be_same_as 1
+    end
+
+    it "should retrieve issue components by dot.method invocation" do
+      @issue = @session.issues.by_id 1
+      @issue.id.to_i.must_be_same_as 1
     end
   end # listing issues
 

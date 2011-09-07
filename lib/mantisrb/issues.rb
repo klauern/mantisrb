@@ -6,17 +6,23 @@ module Mantis
       @session = session
     end
 
+    def raw_by_id(id)
+      @session.response_trimmed :mc_issue_get, { issue_id: id }
+    end
+
     def by_id(id)
-      @session.response_trimmed :mc_issue_get, 
-        { issue_id: id }
+      Mantis::XSD::IssueData.new raw_by_id id
     end
 
     def exists?(id)
-      @session.response_trimmed :mc_issue_exists,
-        { issue_id: id }
+      @session.response_trimmed :mc_issue_exists, { issue_id: id }
     end
 
     def by_summary(issue_summary)
+      Mantis::XSD::IssueData.new raw_by_summary(issue_summary)
+    end
+
+    def raw_by_summary(issue_summary)
       @session.response_trimmed :mc_issue_get_id_from_summary, {
         summary: issue_summary
       }
@@ -65,18 +71,6 @@ module Mantis
         params[:project] = project
       end
       params
-      #if params[:view_state]
-        #view_state = @session.config.view_state_for(params[:view_state])
-        #params[:view_state] = view_state
-      #end
-      #if params[:status]
-        #status = @session.config.status_for params[:status]
-        #params[:status] = status
-      #end
-      #if params[:reproducibility]
-        #rep = @session.config.reproducibility_for params[:reproducibility]
-        #params[:reproducibility] = rep
-      #end
     end # remap_params_for_issue_data
   end
 end

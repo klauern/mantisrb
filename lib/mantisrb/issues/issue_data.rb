@@ -11,10 +11,20 @@ module Mantis::XSD
 
     def initialize(params={})
       params.each_key { |p|
+        #binding.pry
         instance_variable_set("@#{p}", params[p])
       }
     end
 
+    # Get an instance variable.  Can pass either "variable" or :variable in
+    def [](val)
+      instance_variable_get("@#{val}")
+    end
+
+    # Set an instance variable.  Use "param" or :param for array key
+    def []=(key,val)
+      instance_variable_set("@#{key}", val)
+    end
 
     def document(tag_name="issue")
       @doc ||= to_doc(tag_name)
