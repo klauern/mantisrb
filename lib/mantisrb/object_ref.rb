@@ -1,8 +1,6 @@
-
 module Mantis::XSD
 
   class ObjectRef
-
     attr_accessor :id, :name
 
     def initialize(id, name)
@@ -31,10 +29,5 @@ module Mantis::XSD
       }
       builder.doc.root
     end
-
-
-
-  end
-end
-
-
+  end # ObjectRef
+end # Mantis::XSD

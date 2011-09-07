@@ -1,7 +1,6 @@
 require_relative 'spec_helper'
 
 describe "Working With Projects" do
-
   before do
     @session = create_session
     @projects = []
@@ -56,7 +55,6 @@ describe "Working With Projects" do
       new_project_id.wont_be_nil
       @projects << new_project_id
     end
-
     it "should create a project with only a name" do
       new_project_id = @session.projects.create params={
         name: random_alphanumeric 
@@ -64,7 +62,6 @@ describe "Working With Projects" do
       new_project_id.wont_be_nil
       @projects << new_project_id
     end
-
     it "shouldn't accept incorrect project status types" do
       assert_raises RuntimeError do
         @session.projects.create params={
@@ -73,7 +70,6 @@ describe "Working With Projects" do
         }
       end
     end
-
     it "shouldn't accept incorrect view_states" do
       assert_raises RuntimeError do
         @session.projects.create params={
@@ -82,7 +78,6 @@ describe "Working With Projects" do
         }
       end
     end
-
     it "shouldn't accept incorrect access minimum level" do
       assert_raises RuntimeError do
         @session.projects.create params={
@@ -91,7 +86,6 @@ describe "Working With Projects" do
         }
       end
     end
-
     it "shouldn't accept incorrect subprojects" do
       assert_raises RuntimeError do
         @session.projects.create params={
@@ -104,36 +98,29 @@ describe "Working With Projects" do
       it "can create projects as subprojects" do
         skip
       end
-
       it "can move subprojects from one to another" do
         skip
       end
-
       it "can have multiple nestings of subprojects" do
         skip
       end
     end # Subprojects
-
   end # Addition
 
   describe "Deletion" do
-
     before do
       @id = @session.projects.create params={
         name: random_alphanumeric }
       @projects << @id
     end
-
     it "should delete a project with a valid project_id" do
       @session.projects.delete?(@id).must_equal true
       @projects.delete @id
     end
-
     it "should delete a project with a string project_id" do
       @session.projects.delete?(@id.to_s).must_equal true
       @projects.delete @id
     end
-
     it "should delete a project with an integer project_id" do
       @session.projects.delete?(@id.to_i).must_equal true
       @projects.delete @id
@@ -146,16 +133,13 @@ describe "Working With Projects" do
         name: random_alphanumeric }
       @projects << @id
     end
-
     it "should return an array of hashes" do
       skip
     end
-
     it "should load a project if id is known" do
       proj = @session.projects.find_by_id @id.to_i
       proj[:id].to_i.must_be_same_as @id.to_i
     end
-
     it "should return nil if no project is found with a given id" do
       @session.projects.find_by_id("million").must_be_nil
     end
