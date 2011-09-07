@@ -3,6 +3,7 @@
 Gemfile.lock
 pkg/*
 *.swp
+*.swo
 bin/coderay
 bin/coderay_stylesheet
 bin/nokogiri
