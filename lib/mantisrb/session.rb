@@ -89,8 +89,11 @@ module Mantis
       method_called += "_response"
       response = response_hash.body[method_called.to_sym][:return]
       # TODO: need to find out which types have a nested :item {} hash in them
-      if response.class == Hash && response[:item] != nil
+      if response.class == Hash && response[:item]
         return remove_xsi_type(response[:item])
+      elsif response.class == Hash && response[:"@xsi:type"]
+        #binding.pry
+        return remove_xsi_type(response)
       end
       return response
     end
@@ -99,7 +102,13 @@ module Mantis
     # from Mantis Connect.  Unless you need it, this API should be mapping
     # those for you for most use-cases.
     def remove_xsi_type(hash)
-      hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } } if hash
+      if hash.class == Array
+        return hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } }
+      elsif hash.class == Hash
+        return hash.delete_if { |k,v| k == :"@xsi:type" }
+      end
+      return hash
     end
+
   end
 end

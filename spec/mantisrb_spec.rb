@@ -9,7 +9,7 @@ describe Mantis::Session do
   describe "Mantis" do
 
     it "should strip all :\"@xsi:type\" elements" do
-      @session.config.statuses.each { |t| t.keys.wont_include :"@xsi:type" }
+      @session.config.statuses.each { |t| t.keys.wont_include "@xsi:type".to_sym }
     end
 
   end # Mantis
