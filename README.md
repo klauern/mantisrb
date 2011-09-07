@@ -10,13 +10,17 @@ Usage
 -----
 Install:
 
+~~~
     gem install mantisrb
+~~~
 
 Create a session to the Mantis server:
 
+~~~
     require 'mantisrb'
 
     session = Mantis:Session.new "http://mantisurl.com/mantis", "Username", "Password"
+~~~
 
 Various components are described below:
 
