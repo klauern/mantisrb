@@ -93,10 +93,10 @@ module Mantis
     # Take a Hash of values and create an instance of {IssueData} out of it.
     # If passed an instance of {IssueData} already, return it back.
     def map_params_to_issue_data(params)
-      if params.class == IssueData
+      if params.class == Mantis::XSD::IssueData
         return params
       elsif params.class == Hash
-        return remap_params_for_issue_data(params)
+        return Mantis::XSD::IssueData.new(remap_params_for_issue_data(params))
       end
       raise "Wrong Type passed in.  Must be either a Hash of parameters or IssueData instance"
     end # map_params_to_issue_data

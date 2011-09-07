@@ -1,8 +1,6 @@
 require_relative 'spec_helper'
 
-
 describe Mantis::Filters do
-
 
   before do
     @session = create_session
@@ -10,6 +8,7 @@ describe Mantis::Filters do
 
   describe "listing filters" do
     it "should list filters for a user" do
+      skip
       prjs = @session.projects.list
       filters = @session.filters.list(prjs[0].id)
       if filters.size > 0
