@@ -6,18 +6,26 @@ module Mantis
       @session = session
     end
 
-    def get_issues(project_id, page_number=0, per_page=0)
-      @session.response :mc_filter_get_issues, {
-        project_id: id,
-        page_number: page_number,
+    def by_project(project_id)
+      @session.response_trimmed :mc_filter_get, {
+        project_id: project_id
+      }
+    end
+
+    alias :list :by_project
+
+    def raw_issues_for(project_id, filter_id, page_num=0, per_page=50)
+      @session.response_trimmed :mc_filter_get_issues, {
+        project_id: project_id,
+        filter_id: filter_id,
+        page_number: page_num,
         per_page: per_page
       }
     end
 
-    def by_project(project_id)
-      @session.response :mc_filter_get, {
-        project_id: project_id
-      }
+    def issues_for(project_id, filter_id, page_num=0, per_page=50)
+      raw = raw_issues_for(project_id, filter_id, page_num, per_page)
+      issues = raw.map { |issue| Mantis::XSD::IssueData.new issue }
     end
-  end
-end
+  end # Filters
+end # Mantis
