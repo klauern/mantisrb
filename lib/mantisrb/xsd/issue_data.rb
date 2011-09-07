@@ -16,15 +16,6 @@ module Mantis::XSD
       }
     end
 
-    # Get an instance variable.  Can pass either "variable" or :variable in
-    def [](val)
-      instance_variable_get("@#{val}")
-    end
-
-    # Set an instance variable.  Use "param" or :param for array key
-    def []=(key,val)
-      instance_variable_set("@#{key}", val)
-    end
 
     def document(tag_name="issue")
       @doc ||= to_doc(tag_name)
@@ -35,72 +26,54 @@ module Mantis::XSD
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:IssueData") do
           xml.id_ @id if @id
-          if (@view_state)
-            xml.view_state(type: "tns:ObjectRef") {
-              xml.id_ @view_state[:id]
-              xml.name @view_state[:name]
-            }
-          end
+          xml.view_state(type: "tns:ObjectRef") {
+            xml.id_ @view_state[:id]
+            xml.name @view_state[:name]
+          }
           xml.last_updated @last_updated if @last_updated
-          if @project
-            xml.project(type: "tns:ObjectRef") {
-              xml.id_ @project[:id]
-              xml.name @project[:name]
-            }
-          end
+          xml.project(type: "tns:ObjectRef") {
+            xml.id_ @project[:id]
+            xml.name @project[:name]
+          }
           xml.category @category if @category
-          if @priority
-            xml.priority(type: "tns:ObjectRef") {
-              xml.id_ @priority[:id]
-              xml.name @priority[:name]
-            }
-          end
-          if @severity
-            xml.severity(type: "tns:ObjectRef") {
-              xml.id_ @severity[:id]
-              xml.name @priority[:name]
-            }
-          end
-          if @status
-            xml.status(type: "tns:ObjectRef") {
-              xml.id_ @status[:id]
-              xml.name @status[:name]
-            }
-          end
+          xml.priority(type: "tns:ObjectRef") {
+            xml.id_ @priority[:id]
+            xml.name @priority[:name]
+          }
+          xml.severity(type: "tns:ObjectRef") {
+            xml.id_ @severity[:id]
+            xml.name @priority[:name]
+          }
+          xml.status(type: "tns:ObjectRef") {
+            xml.id_ @status[:id]
+            xml.name @status[:name]
+          }
           # TODO: reporter (AccountData)
-          xml.summary @summary if @summary
-          xml.version @version if @version
+          xml.summary @summary if @build
+          xml.version @version if @build
           xml.build @build if @build
           xml.platform @platform if @platform
           xml.os @os if @os
           xml.os_build @os_build if @os_build
-          if @reproducibility
-            xml.reproducibility(type: "tns:ObjectRef") {
-              xml.id_ @reproducibility[:id]
-              xml.name @reproducibility[:name]
-            }
-          end
+          xml.reproducibility(type: "tns:ObjectRef") {
+            xml.id_ @reproducibility[:id]
+            xml.name @reproducibility[:name]
+          }
           xml.date_submitted @date_submitted if @date_submitted
           xml.sponsorship_total @sponsorship_total if @sponsorship_total
           # TODO: handler (AccountData)
-          if @projection
-            xml.projection(type: "tns:ObjectRef") {
-              xml.id_ @projection[:id]
-              xml.name @projection[:name]
-            }
-          end
-          if @eta
-            xml.eta(type: "tns:ObjectRef") {
-              xml.id_ @eta[:id]
-              xml.name @eta[:name]
-            }
-          end
-          if @resolution
-            xml.resolution(type: "tns:ObjectRef") {
-              xml.id_ @resolution[:id]
-              xml.name @resolution[:name]
-            }
-          end
+          xml.projection(type: "tns:ObjectRef") {
+            xml.id_ @projection[:id]
+            xml.name @projection[:name]
+          }
+          xml.eta(type: "tns:ObjectRef") {
+            xml.id_ @eta[:id]
+            xml.name @eta[:name]
+          }
+          xml.resolution(type: "tns:ObjectRef") {
+            xml.id_ @resolution[:id]
+            xml.name @resolution[:name]
+          }
           xml.fixed_in_version @fixed_in_version if @fixed_in_version
           xml.target_version @target_version if @target_version
           xml.description @description if @description

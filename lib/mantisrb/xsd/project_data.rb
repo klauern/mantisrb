@@ -1,6 +1,3 @@
-require 'ostruct'
-require 'delegate'
-
 module Mantis::XSD
 
   class ProjectData
@@ -15,10 +12,12 @@ module Mantis::XSD
       }
     end
 
-    def [](val)
+    def [](key)
+      instance_variable_get("@#{key}")
     end
 
     def []=(key,val)
+      instance_variable_set("@#{key}", val)
     end
 
     def document(tag_name="project")
