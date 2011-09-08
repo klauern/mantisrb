@@ -4,7 +4,6 @@ describe "Working With Projects" do
   before do
     @session = create_session
     @projects = []
-    @category_hash = {} # Hash of project_id to array of categories to clean up afterwards
   end
 
   describe "Getting Info" do
@@ -25,13 +24,24 @@ describe "Working With Projects" do
   end # getting info
 
   describe "Categories" do
+    #before do
+      #@cat_prj_id = @session.projects.create params={
+        #name: random_alphanumeric
+      #}
+      #@cat_prj = @session.projects.find_by_id @cat_prj_id
+      #@category_hash = {} # Hash of project_id to array of categories to clean up afterwards
+    #end
+
     it "should get the categories for a project" do
-      proj = @session.projects.list[0]
-      @session.projects.categories(proj[:id]).wont_be_nil
+      skip
+      #@session.projects.categories(@cat_prj[:id]).wont_be_nil
     end
 
     it "should create a new category in a known project" do
       skip
+      #@category_name = random_alphanumeric
+      #num_of_categories = @session.projects.categories @cat_prj[:id]
+      #@session.projects.add_category(@cat_prj[:id], @category_name).to_i.must_be :>, num_of_categories
     end
 
     it "should delete an existing category in a known project" do
@@ -40,6 +50,9 @@ describe "Working With Projects" do
 
     it "should rename a category in a known project" do
       skip
+    end
+
+    after do
     end
   end # Projects :: Categories
 

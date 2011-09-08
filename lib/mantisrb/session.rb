@@ -102,12 +102,16 @@ module Mantis
     # from Mantis Connect.  Unless you need it, this API should be mapping
     # those for you for most use-cases.
     def remove_xsi_type(hash)
-      if hash.class == Array
-        return hash.map { |h| h.delete_if { |k,v| k == :"@xsi:type" } }
+      if hash.class == Array && hash[0].class == Hash
+        return hash.map { |h| delete_xsi_type(h) }
       elsif hash.class == Hash
-        return hash.delete_if { |k,v| k == :"@xsi:type" }
+        return delete_xsi_type(hash)
       end
       return hash
+    end
+
+    def delete_xsi_type(hash)
+      hash.delete_if { |k,v| k == :"@xsi:type" }
     end
 
   end

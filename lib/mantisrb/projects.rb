@@ -85,7 +85,7 @@ module Mantis
 
     # Get a list of all categories a project has
     def categories(project_id)
-      @session.response :mc_project_get_categories, {
+      @session.response_trimmed :mc_project_get_categories, {
         project_id: project_id
       }
     end
