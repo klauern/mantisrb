@@ -20,7 +20,7 @@ describe "Working With Projects" do
 
     it "should return an array for any number of projects listed" do
       proj_list = @session.projects.list
-      assert_t  instance_of Array, proj_list
+      assert_instance_of Array, proj_list
     end
 
     it "should generate a project if given an id" do
