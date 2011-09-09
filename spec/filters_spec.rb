@@ -12,7 +12,8 @@ describe Mantis::Filters do
       prjs = @session.projects.list
       filters = @session.filters.list(prjs[0].id)
       if filters.size > 0
-        must_be_same Array, filters.class, "Filters must create an Array[]"
+        assert_instance_of Array, filters.class, "Filters must create an Array[]"
+        assert_instance_of FilterData, filters[0]
       end
     end
   end # listing filters
