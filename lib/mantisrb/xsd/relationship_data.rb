@@ -6,16 +6,6 @@ module Mantis::XSD
 
     attr_accessor :id, :type, :target_id
 
-    #def initialize(params={})
-      #params.each_key { |p|
-        #instance_variable_set("@#{p}", params[p])
-      #}
-    #end
-
-    #def document(tag_name="relationship")
-      #@doc ||= to_doc(tag_name)
-    #end
-
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:RelationshipData") do
@@ -32,8 +22,5 @@ module Mantis::XSD
       builder.doc
     end # to_doc
 
-    #def to_element_string(tag_name)
-      #document(tag_name).root.to_s
-    #end # to_element_string
   end # RelationshipData
 end # Mantis::XSD

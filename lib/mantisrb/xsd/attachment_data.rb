@@ -3,17 +3,6 @@ module Mantis::XSD
   class AttachmentData
     include Mantis::XSD::DocBuilder
     attr_accessor :id, :filename, :size, :content_type, :date_submitted, :download_url, :user_id
-
-    #def initialize(params={})
-      #params.each_key { |p|
-        #instance_variable_set("@#{p}", params[p])
-      #}
-    #end
-
-    #def document(tag_name="attachment")
-      #@doc ||= to_doc(tag_name)
-    #end
-
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:AttachmentData") do
@@ -28,9 +17,5 @@ module Mantis::XSD
       }
       builder.doc
     end # to_doc
-
-    #def to_element_string(tag_name)
-      #document(tag_name).root.to_s
-    #end # to_element_string
   end # AttachmentData
 end # Mantis::XSD

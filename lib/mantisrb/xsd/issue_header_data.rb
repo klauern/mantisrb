@@ -7,16 +7,6 @@ module Mantis::XSD
       :severity, :status, :reporter, :summary, :handler, :resolution,
       :attachments_count, :notes_count
 
-    #def initialize(params={})
-      #params.each_key { |p|
-        #instance_variable_set("@#{p}", params[p])
-      #}
-    #end
-
-    #def document(tag_name="issue_header")
-      #@doc ||= to_doc(tag_name)
-    #end
-
     def to_doc(tag_name)
       # TODO: surround conditional
       builder = Nokogiri::XML::Builder.new { |xml|
@@ -57,9 +47,5 @@ module Mantis::XSD
       }
       builder.doc
     end # to_doc
-
-    #def to_element_string(tag_name)
-      #document(tag_name).root.to_s
-    #end # to_element_string
   end # IssueHeaderData
 end # Mantis::XSD

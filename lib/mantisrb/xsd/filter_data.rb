@@ -28,9 +28,5 @@ module Mantis::XSD
       }
       builder.doc
     end # to_doc
-
-    def to_element_string(tag_name)
-      document(tag_name).root.to_s
-    end # to_element_string
   end # FilterData
 end # Mantis::XSD

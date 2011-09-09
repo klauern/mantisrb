@@ -27,10 +27,8 @@ module Mantis::XSD::DocBuilder
     instance_variable_set("@#{key}", val)
   end
 
-
-
   def to_element_string(tag_name)
     document(tag_name).root.to_s
   end # to_element_string
 
-end
+end # Mantis::XSD::DocBuilder
