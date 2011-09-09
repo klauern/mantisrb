@@ -11,6 +11,10 @@ module Mantis::XSD
       :additional_information, :attachments, :relationships, :notes, 
       :custom_fields, :due_date, :monitors
 
+    def to_s
+      to_element_string("issue")
+    end
+
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:IssueData") do

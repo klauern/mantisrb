@@ -31,4 +31,5 @@ module Mantis::XSD::DocBuilder
     document(tag_name).root.to_s
   end # to_element_string
 
+
 end # Mantis::XSD::DocBuilder
