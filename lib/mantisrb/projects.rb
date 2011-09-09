@@ -47,6 +47,8 @@ module Mantis
       # with a Hash to be consistent
       if proj_list[0].class == Array
         return [] << create_project_hash(proj_list) 
+      elsif proj_list.class == Hash
+        return [] << proj_list
       end
       proj_list
     end

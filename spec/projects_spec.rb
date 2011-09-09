@@ -18,6 +18,11 @@ describe "Working With Projects" do
       end
     end 
 
+    it "should return an array for any number of projects listed" do
+      proj_list = @session.projects.list
+      assert_t  instance_of Array, proj_list
+    end
+
     it "should generate a project if given an id" do
       skip
     end

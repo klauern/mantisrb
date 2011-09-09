@@ -1,4 +1,6 @@
 require 'base64'
+require 'rubygems'
+require 'bundler/setup'
 require 'pry'
 gem 'minitest'
 %w{ spec unit autorun pride }.each { |w|
