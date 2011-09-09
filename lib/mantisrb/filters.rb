@@ -7,9 +7,11 @@ module Mantis
     end
 
     def by_project(project_id)
-      @session.response_trimmed :mc_filter_get, {
+      filters = [] << @session.response_trimmed(:mc_filter_get, {
         project_id: project_id
-      }
+      })
+      binding.pry
+      filters.map { |f| Mantis::XSD::FilterData.new f }
     end
 
     alias :list :by_project
