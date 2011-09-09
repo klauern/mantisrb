@@ -1,17 +1,18 @@
 module Mantis::XSD
 
   class CustomFieldValueForIssueData
+    include Mantis::XSD::DocBuilder
     attr_accessor :field, :value
 
-    def initialize(params={})
-      params.each_key { |p|
-        instance_variable_set("@#{p}", params[p])
-      }
-    end
+    #def initialize(params={})
+      #params.each_key { |p|
+        #instance_variable_set("@#{p}", params[p])
+      #}
+    #end
 
-    def document(tag_name="custom_field_value_for_issue")
-      @doc ||= to_doc(tag_name)
-    end
+    #def document(tag_name="custom_field_value_for_issue")
+      #@doc ||= to_doc(tag_name)
+    #end
 
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
@@ -28,8 +29,8 @@ module Mantis::XSD
       builder.doc
     end # to_doc
 
-    def to_element_string(tag_name)
-      document(tag_name).root.to_s
-    end # to_element_string
+    #def to_element_string(tag_name)
+      #document(tag_name).root.to_s
+    #end # to_element_string
   end # CustomFieldValueForIssueData
 end # Mantis::XSD

@@ -1,6 +1,7 @@
 module Mantis::XSD
 
   class FilterData
+    include Mantis::XSD::DocBuilder
     attr_accessor :id, :owner, :project_id, :is_public, :name, :filter_string, :url
 
     def initialize(params={})

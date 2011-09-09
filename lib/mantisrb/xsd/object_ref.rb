@@ -1,12 +1,15 @@
 module Mantis::XSD
 
   class ObjectRef
+    
+    include Mantis::XSD::DocBuilder
+
     attr_accessor :id, :name
 
-    def initialize(id, name)
-      @id = id
-      @name = name
-    end
+    #def initialize(id, name)
+      #@id = id
+      #@name = name
+    #end
 
     # Generate an ObjectRef XSD type given an #element_name
     # that you want to tag it with.
