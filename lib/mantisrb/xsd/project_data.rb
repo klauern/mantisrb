@@ -1,28 +1,31 @@
 module Mantis::XSD
 
   class ProjectData
+
+    include Mantis::XSD::DocBuilder
+
     attr_accessor :name, :status, :enabled, :view_state, :inherit_global
     attr_accessor :access_min, :file_path, :description, :subprojects
     attr_reader :id
     
 
-    def initialize(params)
-      params.each_key { |p|
-        instance_variable_set("@#{p}", params[p])
-      }
-    end
+    #def initialize(params)
+      #params.each_key { |p|
+        #instance_variable_set("@#{p}", params[p])
+      #}
+    #end
 
-    def [](key)
-      instance_variable_get("@#{key}")
-    end
+    #def [](key)
+      #instance_variable_get("@#{key}")
+    #end
 
-    def []=(key,val)
-      instance_variable_set("@#{key}", val)
-    end
+    #def []=(key,val)
+      #instance_variable_set("@#{key}", val)
+    #end
 
-    def document(tag_name="project")
-      @doc ||= to_doc(tag_name)
-    end
+    #def document(tag_name="project")
+      #@doc ||= to_doc(tag_name)
+    #end
 
     # Creates a Nokogiri::XML::Element object out of this class
     def to_doc(tag_name)
@@ -62,9 +65,9 @@ module Mantis::XSD
       builder.doc
     end # to_doc
 
-    def to_element_string(tag_name)
-      document(tag_name).root.to_s
-    end # to_element_string
+    #def to_element_string(tag_name)
+      #document(tag_name).root.to_s
+    #end # to_element_string
 
   end # ProjectData
 end # Mantis::XSD

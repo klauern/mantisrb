@@ -1,6 +1,8 @@
 module Mantis::XSD
 
   class IssueData
+    include Mantis::XSD::DocBuilder
+
     attr_accessor :id, :view_state, :last_updated, :project, :category, 
       :priority, :severity, :status, :reporter, :summary, :version, :build, 
       :platform, :os, :os_build, :reproducibility, :date_submitted, 
@@ -8,25 +10,6 @@ module Mantis::XSD
       :fixed_in_version, :target_version, :description, :steps_to_reproduce, 
       :additional_information, :attachments, :relationships, :notes, 
       :custom_fields, :due_date, :monitors
-
-    def initialize(params={})
-      params.each_key { |p|
-        #binding.pry
-        instance_variable_set("@#{p}", params[p])
-      }
-    end
-
-    def [](key)
-      instance_variable_get("@#{key}")
-    end
-
-    def []=(key,val)
-      instance_variable_set("@#{key}", val)
-    end
-
-    def document(tag_name="issue")
-      @doc ||= to_doc(tag_name)
-    end
 
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|

@@ -1,6 +1,9 @@
 module Mantis::XSD
 
   class AccountData
+
+    include DocBuilder
+
     attr_accessor :id, :name, :real_name, :email
 
     def initialize(params={})
