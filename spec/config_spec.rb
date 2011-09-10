@@ -5,18 +5,23 @@ describe Mantis::Config do
 
   before do
     @session = create_session
+    @configs = %w{ statuses priorities severities reproducibilities 
+            projections etas resolutions access_levels
+            project_statuses project_view_states view_states
+            custom_field_types }
   end
 
   describe " config" do
     it "should retrieve statuses, priorities, severities, and more" do
-      %w{ statuses priorities severities reproducibilities 
-            version projections etas resolutions access_levels
-            project_statuses project_view_states view_states
-            custom_field_types }.each { |w|
-
+      @configs.each { |w|
         @session.config.send(w).size.must_be :>=, 1
       }
     end
+      it "should return an array for all config types" do
+    @configs.each { |c|
+        assert_instance_of Array, @session.config.send(c)
+    }
+      end
     it "should get the statuses of Mantis we're connecting to" do
       wont_be_nil_for(@session.config.statuses, "acknowledged")
     end
@@ -30,7 +35,7 @@ describe Mantis::Config do
       wont_be_nil_for(@session.config.reproducibilities, "always")
     end
     it "should get the version of Mantis we're connecting to" do
-      @session.config.version.must_match "1.2"
+      @session.config.version.wont_be_nil
     end
     it "should get the projections of Mantis we're connecting to" do
       wont_be_nil_for(@session.config.projections, "none")
