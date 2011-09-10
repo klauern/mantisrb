@@ -10,10 +10,11 @@ describe "Working With Projects" do
     it "should get a project list if there are projects" do
       proj_list = @session.projects.list
       unless proj_list == nil
-        @session.projects.project_list.class.must_be :==, Array
+        assert_instance_of Array, @session.projects.list
+        #@session.projects.project_list.class.must_be :==, Array
         %w{ id name status enabled view_state access_min 
               file_path description subprojects }.each { |w|
-          @session.projects.project_list[0].must_include w.to_sym
+          wont_be_nil @session.projects.list[0].send(w.to_sym)
         }
       end
     end 
@@ -27,6 +28,16 @@ describe "Working With Projects" do
       skip
     end
   end # getting info
+
+  describe "Issues" do
+
+    it "should retrieve a list of Issues for a project name" do
+      issues = @session.projects.issues("test")
+      assert_instance_of Array, issues
+      assert_instance_of Mantis::XSD::IssueData, issues[0]
+    end
+
+  end # Issues
 
   describe "Categories" do
     #before do
@@ -156,6 +167,7 @@ describe "Working With Projects" do
     end
     it "should load a project if id is known" do
       proj = @session.projects.find_by_id @id.to_i
+      #binding.pry
       proj[:id].to_i.must_be_same_as @id.to_i
     end
     it "should return nil if no project is found with a given id" do

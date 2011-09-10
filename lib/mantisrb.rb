@@ -3,12 +3,15 @@ require 'bundler/setup'
 require 'nokogiri'
 require 'builder'
 require 'savon'
+require 'log4r'
 require 'mantisrb/version'
 require 'mantisrb/session'
 require 'mantisrb/issues'
 require 'mantisrb/config'
 require 'mantisrb/projects'
 require 'mantisrb/filters'
+
+include Log4r
 
 # XSD types that might not be used immediately depending on what you're doing
 module Mantis::XSD

@@ -84,7 +84,7 @@ module Mantis
         list = @session.projects.list
         # this allows both an id and a name to be passed in, since it's looking
         # at all values to match EXACTLY the value passed in.
-        project = list.select { |l| l.value? params[:project].to_s}[0]
+        project = list.select { |l| l.id == params[:project].to_s}[0]
         params[:project] = project
       end
       params

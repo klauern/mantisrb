@@ -11,8 +11,8 @@ describe Mantis::Filters do
       skip
       prjs = @session.projects.list
       filters = @session.filters.list(prjs[0].id)
+      assert_instance_of Array, filters.class
       if filters.size > 0
-        assert_instance_of Array, filters.class, "Filters must create an Array[]"
         assert_instance_of FilterData, filters[0]
       end
     end

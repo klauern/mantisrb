@@ -13,23 +13,25 @@ module Mantis
 
     def issues(project_name, page=0, per_page=100)
       id = id_by_name(project_name)
-      issues_by_id(id, page, per_page)
+      issues_by_project_id(id, page, per_page)
     end
 
     def issues_by_project_id(id, page=0, per_page=100)
-      @session.response_trimmed :mc_project_get_issues, {
+      issues = [] << @session.response_trimmed(:mc_project_get_issues, {
         project_id: id,
         page_number: page,
         per_page: per_page
-      }
+      })
+      issues.map { |issue| Mantis::XSD::IssueData.new issue }
     end
 
     def issue_headers_by_project_id(id, page=0, per_page=100)
-      @session.response_trimmed :mc_project_get_issue_headers, {
+      issues = [] << @session.response_trimmed(:mc_project_get_issue_headers, {
         project_id: id,
         page_number: page,
         per_page: per_page
-      }
+      })
+      issues.map { |issue| Mantis::XSD::IssueHeaderData.new issue }
     end
 
     def find_by_id(project_id)
@@ -45,12 +47,15 @@ module Mantis
       # Savon will wrap an array of arrays of hashes if there's only one
       # project returned from this call.  If so, we need to wrap and create an array
       # with a Hash to be consistent
+      prjs = []
       if proj_list[0].class == Array
-        return [] << create_project_hash(proj_list) 
+        prjs += create_project_hash(proj_list) 
+      elsif proj_list.class == Array
+        prjs += proj_list
       elsif proj_list.class == Hash
-        return [] << proj_list
+        prjs << proj_list
       end
-      proj_list
+      prjs.map { |prj| Mantis::XSD::ProjectData.new prj }
     end
 
     # List all accessible projects for this user

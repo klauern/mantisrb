@@ -1,9 +1,12 @@
 module Mantis
 
   class Session
+    include Log4r
     SOAP_API = "/api/soap/mantisconnect.php?wsdl"
 
     def initialize(url, user, pass)
+      @logger = Logger.new "mantisrb.log"
+      @logger.outputters = Outputter.stdout
       @url = url
       @user = user
       @pass = pass
@@ -90,8 +93,10 @@ module Mantis
       response = response_hash.body[method_called.to_sym][:return]
       # TODO: need to find out which types have a nested :item {} hash in them
       if response.class == Hash && response[:item]
+        @logger.debug "Hash response, with :item"
         return remove_xsi_type(response[:item])
       elsif response.class == Hash && response[:"@xsi:type"]
+        @logger.debug "Hash response, with XSI type"
         #binding.pry
         return remove_xsi_type(response)
       end
