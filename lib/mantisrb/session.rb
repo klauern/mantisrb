@@ -11,7 +11,7 @@ module Mantis
       @user = user
       @pass = pass
       @connection = Savon::Client.new do
-        wsdl.document = sanitize_url(url)
+        wsdl.document = sanitize_api_url(url)
         http.proxy = ENV['http_proxy'] if ENV['http_proxy']
       end
     end
@@ -49,7 +49,7 @@ module Mantis
 
     private
 
-    def sanitize_url(url)
+    def sanitize_api_url(url)
       unless url.match(/\/api\//) 
         return url + SOAP_API
       end
