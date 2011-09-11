@@ -10,7 +10,6 @@ module Mantis
       filters = [] << @session.response_trimmed(:mc_filter_get, {
         project_id: project_id
       })
-      binding.pry
       filters.map { |f| Mantis::XSD::FilterData.new f }
     end
 

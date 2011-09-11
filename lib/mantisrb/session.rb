@@ -97,7 +97,6 @@ module Mantis
         return remove_xsi_type(response[:item])
       elsif response.class == Hash && response[:"@xsi:type"]
         @logger.debug "Hash response, with XSI type"
-        #binding.pry
         return remove_xsi_type(response)
       end
       return response

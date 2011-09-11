@@ -19,7 +19,7 @@ describe Mantis::Filters do
   end # listing filters
 
   describe "issues in a filter" do
-    it "should return an Array[] of IssueData for a filter" do
+    it "should create an Array[] of IssueData for any filter" do
       skip
     end
     it "should return nil if no issues are found in a filter" do

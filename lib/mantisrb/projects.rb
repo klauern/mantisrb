@@ -17,11 +17,14 @@ module Mantis
     end
 
     def issues_by_project_id(id, page=0, per_page=100)
-      issues = [] << @session.response_trimmed(:mc_project_get_issues, {
+      issues = @session.response_trimmed(:mc_project_get_issues, {
         project_id: id,
         page_number: page,
         per_page: per_page
       })
+      if issues.class == Hash
+        return [] << Mantis::XSD::IssueData.new(issues)
+      end
       issues.map { |issue| Mantis::XSD::IssueData.new issue }
     end
 
@@ -64,6 +67,11 @@ module Mantis
       project_list
       #@session.response_trimmed :mc_projects_get_user_accessible
     end
+
+    def project_list_xml
+      @session.response(:mc_projects_get_user_accessible).to_xml
+    end
+
 
     # Create a new Project
     # @return [Integer] id of the new Project record in Mantis

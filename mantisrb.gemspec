@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "savon"
   s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "log4r"
-  s.add_development_dependency "minitest"
+  s.add_development_dependency "minitest", ">= 2.5.0"
   s.add_development_dependency "rake"
   s.add_development_dependency "guard"
   s.add_development_dependency "rb-fchange"
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rb-fsevent"
   s.add_development_dependency "yard"
   s.add_development_dependency "rdiscount"
-  s.add_development_dependency "pry"
+  s.add_development_dependency "pry", ">= 0.9.5"
+  s.add_development_dependency "rr"
 
 end
