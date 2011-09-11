@@ -1,3 +1,7 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'spec/'
+end
 require 'base64'
 require 'rubygems'
 require 'bundler/setup'

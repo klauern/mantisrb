@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "yard"
   s.add_development_dependency "rdiscount"
   s.add_development_dependency "pry", ">= 0.9.5"
+  s.add_development_dependency "simplecov", '>= 0.4.0'
   s.add_development_dependency "rr"
 
 end
