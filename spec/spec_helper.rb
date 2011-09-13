@@ -17,6 +17,12 @@ MANTIS_URL = "http://www.plangineering.com/nek/mantis"
 MANTIS_USER = "admin"
 MANTIS_PASS = "RFBDSlBxYURURXpCMXpoeA=="
 
+Savon.configure do |config|
+  config.log = false
+  config.log_level = :info
+end
+HTTPI.log = false
+
 def create_session
   if ENV['MANTIS_USER'] && ENV['MANTIS_PASS'] && ENV['MANTIS_URL']
     session = Mantis::Session.new ENV['MANTIS_URL'], ENV['MANTIS_USER'],
