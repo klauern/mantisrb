@@ -14,3 +14,4 @@ bin/rdiscount
 bin/thor
 .yardoc
 doc
+coverage
