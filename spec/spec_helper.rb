@@ -1,6 +1,6 @@
-require 'simplecov'
-SimpleCov.start do
-  add_filter 'spec/'
+require 'simplecov'  # doing it in the Rakefile fixes Coverage reports if
+SimpleCov.start do   # not running spec/spec_helper.rb directly from Ruby
+  add_filter 'spec/' # ie: don't remove unless you run specs manually
 end
 require 'base64'
 require 'rubygems'

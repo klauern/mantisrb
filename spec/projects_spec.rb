@@ -168,7 +168,7 @@ describe "Working With Projects" do
     it "should load a project if id is known" do
       proj = @session.projects.find_by_id @id.to_i
       #binding.pry
-      proj[:id].to_i.must_be_same_as @id.to_i
+      proj[:id].to_i.must_equal @id.to_i
     end
     it "should return nil if no project is found with a given id" do
       @session.projects.find_by_id("million").must_be_nil
