@@ -38,5 +38,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "pry", ">= 0.9.5"
   s.add_development_dependency "simplecov", '>= 0.5.2'
   s.add_development_dependency "savon_spec"
+  s.add_development_dependency "mocha"
 
 end

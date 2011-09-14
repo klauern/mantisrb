@@ -1,17 +1,20 @@
-require 'simplecov'  # doing it in the Rakefile fixes Coverage reports if
-SimpleCov.start do   # not running spec/spec_helper.rb directly from Ruby
-  add_filter 'spec/' # ie: don't remove unless you run specs manually
+require 'simplecov'  
+SimpleCov.start do  
+  add_filter 'spec/'
 end
+
 require 'base64'
-require 'rubygems'
 require 'bundler/setup'
 require 'pry'
+
 gem 'minitest'
-%w{ spec unit autorun pride }.each { |w|
+%w{ spec unit mock autorun pride }.each { |w|
   require "minitest/#{w}"
 }
 $:.unshift File.join(File.dirname(__FILE__), "../lib") # 'lib' directory
 require 'mantisrb'
+
+require 'mocha'
 
 MANTIS_URL = "http://www.plangineering.com/nek/mantis"
 MANTIS_USER = "admin"

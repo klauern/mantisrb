@@ -1,9 +1,14 @@
+require_relative 'savon_spec/macros'
+Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
+
+
 require_relative 'spec_helper'
 
-
 describe Mantis::Config do
+  include Savon::Spec::Macros
 
   before do
+    savon.expects(:mc_enum_status).returns(:statuses)
     @session = create_session
     @configs = %w{ statuses priorities severities reproducibilities 
             projections etas resolutions access_levels
@@ -23,7 +28,9 @@ describe Mantis::Config do
     }
       end
     it "should get the statuses of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.statuses, "acknowledged")
+      refute_nil @session.config.statuses
+      #wont_be_nil_for(@session.config.statuses, "acknowledged")
+      binding.pry
     end
     it "should get the priorities of Mantis we're connecting to" do
       wont_be_nil_for(@session.config.priorities, "none")

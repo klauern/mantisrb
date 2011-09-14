@@ -10,7 +10,7 @@ describe "Working With Projects" do
     it "should get a project list if there are projects" do
       proj_list = @session.projects.list
       unless proj_list == nil
-        assert_instance_of Array, @session.projects.list
+        assert_instance_of Array, @session.projects.listh
         #@session.projects.project_list.class.must_be :==, Array
         %w{ id name status enabled view_state access_min 
               file_path description subprojects }.each { |w|

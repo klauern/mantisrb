@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://futureware.biz/mantisconnect">
+ <SOAP-ENV:Body>
+  <ns1:mc_projects_get_user_accessibleResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+   <return xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="tns:ProjectData[1]">
+    <item xsi:type="tns:ProjectData">
+     <id xsi:type="xsd:integer">45</id>
+     <name xsi:type="xsd:string">test</name>
+     <status xsi:type="tns:ObjectRef">
+      <id xsi:type="xsd:integer">10</id>
+      <name xsi:type="xsd:string">development</name>
+     </status>
+     <enabled xsi:type="xsd:boolean">true</enabled>
+     <view_state xsi:type="tns:ObjectRef">
+      <id xsi:type="xsd:integer">10</id>
+      <name xsi:type="xsd:string">public</name>
+     </view_state>
+     <access_min xsi:type="tns:ObjectRef">
+      <id xsi:type="xsd:integer">10</id>
+      <name xsi:type="xsd:string">viewer</name>
+     </access_min>
+     <file_path xsi:type="xsd:string"></file_path>
+     <description xsi:type="xsd:string"></description>
+     <subprojects xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="tns:ProjectData[0]"></subprojects>
+    </item>
+   </return>
+  </ns1:mc_projects_get_user_accessibleResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
