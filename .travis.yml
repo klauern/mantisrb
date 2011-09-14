@@ -7,3 +7,6 @@ env:
 notifications:
   recipients:
     - klauer@gmail.com
+branches:
+  only:
+    - master
