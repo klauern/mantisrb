@@ -1,6 +1,6 @@
 require_relative "fixture"
 require 'mocha'
-#require 'mocha/integration/mini_test'
+
 module Savon
   module Spec
 
@@ -36,7 +36,6 @@ module Savon
       def returns(response = nil)
         http = { :code => 200, :headers => {}, :body => "" }
         
-        binding.pry
         case response
           when Symbol   then http[:body] = Fixture[soap_action, response]
           when Hash     then http.merge! response

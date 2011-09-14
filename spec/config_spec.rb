@@ -8,7 +8,7 @@ describe Mantis::Config do
   include Savon::Spec::Macros
 
   before do
-    savon.expects(:mc_enum_status).returns(:statuses)
+    savon.stubs(:mc_enum_status).returns(:statuses)
     @session = create_session
     @configs = %w{ statuses priorities severities reproducibilities 
             projections etas resolutions access_levels
