@@ -8,7 +8,6 @@ describe Mantis::Config do
   include Savon::Spec::Macros
 
   before do
-    savon.stubs(:mc_enum_status).returns(:statuses)
     @session = create_session
     @configs = %w{ statuses priorities severities reproducibilities 
             projections etas resolutions access_levels
@@ -28,6 +27,7 @@ describe Mantis::Config do
     }
       end
     it "should get the statuses of Mantis we're connecting to" do
+      savon.stubs(:mc_enum_status).with(:status_request).returns(:statuses)
       refute_nil @session.config.statuses
       #wont_be_nil_for(@session.config.statuses, "acknowledged")
       binding.pry
