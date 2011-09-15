@@ -1,16 +1,16 @@
 require_relative 'spec_helper'
-
+class FiltersTest < MiniTest::Unit::TestCase
 describe Mantis::Filters do
 
-  before do
-    @session = create_session
+  let :session do
+    create_session
   end
 
   describe "listing filters" do
     it "should list filters for a user" do
       skip
-      prjs = @session.projects.list
-      filters = @session.filters.list(prjs[0].id)
+      prjs = session.projects.list
+      filters = session.filters.list(prjs[0].id)
       assert_instance_of Array, filters.class
       if filters.size > 0
         assert_instance_of FilterData, filters[0]
@@ -30,3 +30,4 @@ describe Mantis::Filters do
     end
   end # issues in filter
 end # Mantis::Filters
+end # FiltersTest
