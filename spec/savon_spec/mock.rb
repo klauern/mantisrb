@@ -1,5 +1,5 @@
-require_relative "fixture"
 require 'mocha'
+require_relative "fixture"
 
 module Savon
   module Spec
@@ -23,7 +23,12 @@ module Savon
 
       # Expects a given SOAP body Hash to be used.
       def with(soap_body)
-        Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body) if mock_method == :expects
+        #case soap_body
+          #when Hash then 
+            #Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body) if mock_method == :expects
+          #when Symbol then 
+        Savon::SOAP::XML.any_instance_expects(:body=).with(Fixture[soap_action, soap_body]) if mock_method == :expects
+        #end
         self
       end
 
@@ -63,7 +68,7 @@ module Savon
       attr_accessor :mock_method
 
       def soap_action=(soap_action)
-        @soap_action = soap_action.kind_of?(Symbol) ? soap_action.to_s.lower_camelcase : soap_action
+        @soap_action = soap_action.kind_of?(Symbol) ? soap_action.to_s: soap_action
       end
 
       attr_reader :soap_action

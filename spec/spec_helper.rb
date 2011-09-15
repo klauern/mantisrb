@@ -24,6 +24,7 @@ Savon.configure do |config|
   config.log = false
   config.log_level = :info
 end
+require 'mocha/integration/mini_test'
 HTTPI.log = false
 
 def create_session
