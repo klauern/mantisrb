@@ -4,27 +4,32 @@ Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
 
 require_relative 'spec_helper'
 
-describe Mantis::Config do
+class ConfigTests < MiniTest::Unit::TestCase
+
+  describe Mantis::Config do
   include Savon::Spec::Macros
 
-  before do
-    @session = create_session
-    @configs = %w{ statuses priorities severities reproducibilities 
+    let :session do
+      create_session
+    end
+
+    before do
+      @configs = %w{ statuses priorities severities reproducibilities 
             projections etas resolutions access_levels
             project_statuses project_view_states view_states
             custom_field_types }
-  end
-
-  describe " config" do
-    it "should retrieve statuses, priorities, severities, and more" do
-      @configs.each { |w|
-        @session.config.send(w).size.must_be :>=, 1
-      }
     end
+
+    describe " config" do
+      it "should retrieve statuses, priorities, severities, and more" do
+        @configs.each { |w|
+          session.config.send(w).size.must_be :>=, 1
+        }
+      end
       it "should return an array for all config types" do
-    @configs.each { |c|
-        assert_instance_of Array, @session.config.send(c)
-    }
+        @configs.each { |c|
+          assert_instance_of Array, session.config.send(c)
+        }
       end
     it "should get the statuses of Mantis we're connecting to" do
       savon.stubs(:mc_enum_status).with(:status_request).returns(:statuses)
@@ -83,28 +88,35 @@ describe Mantis::Config do
         s = @session.config.object_ref_for_value(:project_status, :release)
         assert s[:name] == "release"
       end
-    end # statuses
 
-    describe "meta-method mapping" do
-      meth_to_val = { status: :acknowledged,
-                      priority: :none,
-                      severity: :feature,
-                      reproducibility: :always,
-                      projection: :none,
-                      eta: :none,
-                      resolution: :open,
-                      access_level: :viewer,
-                      project_status: :development,
-                      project_view_state: :public,
-                      view_state: :public,
-                      custom_field_type: :Numeric
-      }
-      meth_to_val.each { |k,v| 
-        it "should find a list of ObjectRef Type for #{k}" do
-          refute_nil @session.config.object_ref_for_value(k,v)
+      describe "statuses" do
+        it "should map acknowledged status" do
+          s = session.config.object_ref_for_value(:project_status, :release)
+          assert s[:name] == "release"
         end
-      }
+      end # statuses
 
-    end # meta-method mapping
-  end # config
-end # Mantis::Config
+      describe "meta-method mapping" do
+        meth_to_val = { status: :acknowledged,
+                        priority: :none,
+                        severity: :feature,
+                        reproducibility: :always,
+                        projection: :none,
+                        eta: :none,
+                        resolution: :open,
+                        access_level: :viewer,
+                        project_status: :development,
+                        project_view_state: :public,
+                        view_state: :public,
+                        custom_field_type: :Numeric
+        }
+        meth_to_val.each { |k,v| 
+          it "should find a list of ObjectRef Type for #{k}" do
+            refute_nil session.config.object_ref_for_value(k,v)
+          end
+        }
+
+      end # meta-method mapping
+    end # config
+  end # Mantis::Config
+end # ConfigTest
