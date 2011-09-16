@@ -10,6 +10,7 @@ group :development do
   gem "rdiscount"
   gem "simplecov", '>= 0.5.2'
   gem "pry", ">= 0.9.5"
+  gem "pry-doc"
   gem "savon_spec"
 end
 
