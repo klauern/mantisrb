@@ -1,13 +1,8 @@
-require_relative 'savon_spec/macros'
-Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
-
-
 require_relative 'spec_helper'
 
 class ConfigTests < MiniTest::Unit::TestCase
 
   describe Mantis::Config do
-  include Savon::Spec::Macros
 
     let :session do
       create_session
@@ -31,62 +26,53 @@ class ConfigTests < MiniTest::Unit::TestCase
           assert_instance_of Array, session.config.send(c)
         }
       end
-    it "should get the statuses of Mantis we're connecting to" do
-      savon.stubs(:mc_enum_status).with(:status_request).returns(:statuses)
-      refute_nil @session.config.statuses
-      #wont_be_nil_for(@session.config.statuses, "acknowledged")
-      binding.pry
-    end
-    it "should get the priorities of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.priorities, "none")
-    end
-    it "should get the severities of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.severities, "feature")
-    end
-    it "should get the reproducibilities of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.reproducibilities, "always")
-    end
-    it "should get the version of Mantis we're connecting to" do
-      @session.config.version.wont_be_nil
-    end
-    it "should get the projections of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.projections, "none")
-    end
-    it "should get the ETA's of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.etas, "none")
-    end
-    it "should get the resolutions of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.resolutions, "open")
-    end
-    it "should get the access levels of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.access_levels, "viewer")
-    end
-    it "should get the project statuses of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.project_statuses, "development")
-    end
-    it "should get the project view states of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.project_view_states, "public")
-    end
-    it "should get the issue view states of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.view_states, "public")
-    end
-    it "should get the custom_field_types of Mantis we're connecting to" do
-      wont_be_nil_for(@session.config.custom_field_types, "Numeric")
-    end
-    it "project_status_for should convert :symbol to \"string\"" do
-      @session.config.object_ref_for_value(:project_status, :development).wont_be_empty
-    end
-    it "view_state_for should convert :symbol to \"string\"" do
-      @session.config.object_ref_for_value(:view_state, :public).wont_be_empty
-    end
-    it "access_min should convert :symbol to \"string\"" do
-      @session.config.object_ref_for_value(:access_min, :viewer).wont_be_empty
-    end
-
-    describe "statuses" do
-      it "should map acknowledged status" do
-        s = @session.config.object_ref_for_value(:project_status, :release)
-        assert s[:name] == "release"
+      it "should get the statuses of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.statuses, "acknowledged")
+      end
+      it "should get the priorities of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.priorities, "none")
+      end
+      it "should get the severities of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.severities, "feature")
+      end
+      it "should get the reproducibilities of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.reproducibilities, "always")
+      end
+      it "should get the version of Mantis we're connecting to" do
+        session.config.version.wont_be_nil
+      end
+      it "should get the projections of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.projections, "none")
+      end
+      it "should get the ETA's of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.etas, "none")
+      end
+      it "should get the resolutions of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.resolutions, "open")
+      end
+      it "should get the access levels of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.access_levels, "viewer")
+      end
+      it "should get the project statuses of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.project_statuses, "development")
+      end
+      it "should get the project view states of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.project_view_states, "public")
+      end
+      it "should get the issue view states of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.view_states, "public")
+      end
+      it "should get the custom_field_types of Mantis we're connecting to" do
+        wont_be_nil_for(session.config.custom_field_types, "Numeric")
+      end
+      it "project_status_for should convert :symbol to \"string\"" do
+        session.config.object_ref_for_value(:project_status, :development).wont_be_empty
+      end
+      it "view_state_for should convert :symbol to \"string\"" do
+        session.config.object_ref_for_value(:view_state, :public).wont_be_empty
+      end
+      it "access_min should convert :symbol to \"string\"" do
+        session.config.object_ref_for_value(:access_min, :viewer).wont_be_empty
       end
 
       describe "statuses" do
@@ -119,4 +105,4 @@ class ConfigTests < MiniTest::Unit::TestCase
       end # meta-method mapping
     end # config
   end # Mantis::Config
-end # ConfigTest
+end # ConfigTests
