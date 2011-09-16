@@ -68,7 +68,7 @@ module Savon
       attr_accessor :mock_method
 
       def soap_action=(soap_action)
-        @soap_action = soap_action.kind_of?(Symbol) ? soap_action.to_s: soap_action
+        @soap_action = soap_action.kind_of?(Symbol) ? soap_action.to_s : soap_action
       end
 
       attr_reader :soap_action

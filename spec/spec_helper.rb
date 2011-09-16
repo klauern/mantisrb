@@ -14,7 +14,11 @@ gem 'minitest'
 $:.unshift File.join(File.dirname(__FILE__), "../lib") # 'lib' directory
 require 'mantisrb'
 
+#require 'mocha/integration/mini_test'
 require 'mocha'
+require_relative 'savon_spec/macros'
+Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
+include Savon::Spec::Macros
 
 MANTIS_URL = "http://www.plangineering.com/nek/mantis"
 MANTIS_USER = "admin"
@@ -24,7 +28,6 @@ Savon.configure do |config|
   config.log = false
   config.log_level = :info
 end
-require 'mocha/integration/mini_test'
 HTTPI.log = false
 
 def create_session
