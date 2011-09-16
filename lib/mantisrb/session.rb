@@ -8,8 +8,10 @@ module Mantis
       @user = user
       @pass = pass
       @connection = Savon::Client.new do
-        wsdl.document = sanitize_api_url(url)
-        http.proxy = ENV['http_proxy'] if ENV['http_proxy']
+        #wsdl.document = sanitize_api_url(url)
+        #http.proxy = ENV['http_proxy'] if ENV['http_proxy']
+        wsdl.endpoint = "http://example.com"
+        wsdl.namespace = "http://futureware.biz/mantisconnect"
       end
     end
 

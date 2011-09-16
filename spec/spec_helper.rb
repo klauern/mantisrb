@@ -14,27 +14,24 @@ gem 'minitest'
 $:.unshift File.join(File.dirname(__FILE__), "../lib") # 'lib' directory
 require 'mantisrb'
 
-require 'mocha'
 
-MANTIS_URL = "http://www.plangineering.com/nek/mantis"
+MANTIS_URL = "http://example.com"
 MANTIS_USER = "admin"
 MANTIS_PASS = "RFBDSlBxYURURXpCMXpoeA=="
+
+require_relative 'savon_spec/macros'
+Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
+include Savon::Spec::Macros
 
 Savon.configure do |config|
   config.log = false
   config.log_level = :info
 end
-require 'mocha/integration/mini_test'
 HTTPI.log = false
 
 def create_session
-  if ENV['MANTIS_USER'] && ENV['MANTIS_PASS'] && ENV['MANTIS_URL']
-    session = Mantis::Session.new ENV['MANTIS_URL'], ENV['MANTIS_USER'],
-      Base64.decode64(ENV['MANTIS_PASS'])
-  else
-    session = Mantis::Session.new MANTIS_URL, MANTIS_USER, 
-      Base64.decode64(MANTIS_PASS)
-  end
+  session = Mantis::Session.new MANTIS_URL, MANTIS_USER, 
+    Base64.decode64(MANTIS_PASS)
   session
 end
 
