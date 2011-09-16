@@ -1,5 +1,3 @@
-
-
 require_relative 'spec_helper'
 
 class ConfigTests < MiniTest::Unit::TestCase
@@ -29,8 +27,6 @@ class ConfigTests < MiniTest::Unit::TestCase
         }
       end
       it "should get the statuses of Mantis we're connecting to" do
-        savon.stubs(:mc_enum_status).with(:status_request).returns(:statuses)
-        #refute_nil session.config.statuses
         wont_be_nil_for(session.config.statuses, "acknowledged")
       end
       it "should get the priorities of Mantis we're connecting to" do
@@ -84,36 +80,29 @@ class ConfigTests < MiniTest::Unit::TestCase
           s = session.config.object_ref_for_value(:project_status, :release)
           assert s[:name] == "release"
         end
+      end # statuses
 
-        describe "statuses" do
-          it "should map acknowledged status" do
-            s = session.config.object_ref_for_value(:project_status, :release)
-            assert s[:name] == "release"
+      describe "meta-method mapping" do
+        meth_to_val = { status: :acknowledged,
+                        priority: :none,
+                        severity: :feature,
+                        reproducibility: :always,
+                        projection: :none,
+                        eta: :none,
+                        resolution: :open,
+                        access_level: :viewer,
+                        project_status: :development,
+                        project_view_state: :public,
+                        view_state: :public,
+                        custom_field_type: :Numeric
+        }
+        meth_to_val.each { |k,v| 
+          it "should find a list of ObjectRef Type for #{k}" do
+            refute_nil session.config.object_ref_for_value(k,v)
           end
-        end # statuses
+        }
 
-        describe "meta-method mapping" do
-          meth_to_val = { status: :acknowledged,
-                          priority: :none,
-                          severity: :feature,
-                          reproducibility: :always,
-                          projection: :none,
-                          eta: :none,
-                          resolution: :open,
-                          access_level: :viewer,
-                          project_status: :development,
-                          project_view_state: :public,
-                          view_state: :public,
-                          custom_field_type: :Numeric
-          }
-          meth_to_val.each { |k,v| 
-            it "should find a list of ObjectRef Type for #{k}" do
-              refute_nil session.config.object_ref_for_value(k,v)
-            end
-          }
-
-        end # meta-method mapping
-      end # config
-    end # Mantis::Config
-  end # ConfigTest
-end # ConfigTests < MiniTest::Unit::TestCase
+      end # meta-method mapping
+    end # config
+  end # Mantis::Config
+end # ConfigTests

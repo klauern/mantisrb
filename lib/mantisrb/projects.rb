@@ -197,4 +197,3 @@ module Mantis
     end # map_category_hash
   end # Projects
 end # Mantis
-
