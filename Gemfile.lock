@@ -105,6 +105,7 @@ DEPENDENCIES
   guard-rake
   mantisrb!
   minitest (>= 2.5.0)
+  mocha
   pry (>= 0.9.5)
   rake
   rb-fchange
