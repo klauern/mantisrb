@@ -25,9 +25,9 @@ module Savon
       def with(soap_body)
         #case soap_body
           #when Hash then 
-            #Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body) if mock_method == :expects
+            Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body) if mock_method == :expects
           #when Symbol then 
-        Savon::SOAP::XML.any_instance_expects(:body=).with(Fixture[soap_action, soap_body]) if mock_method == :expects
+        #Savon::SOAP::XML.any_instance.expects(:body=).with(Fixture[soap_action, soap_body]) if mock_method == :expects
         #end
         self
       end
@@ -74,7 +74,9 @@ module Savon
       attr_reader :soap_action
 
       def new_httpi_mock
-        HTTPI.send(mock_method, :post).with { |http| http.body =~ /<\/(.+:)?#{soap_action}>/ }
+        x = HTTPI.send(mock_method, :post).with { |http| 
+          http.body =~ /<\/(.+:)?#{soap_action}>/ }
+        return x
       end
 
       attr_accessor :httpi_mock

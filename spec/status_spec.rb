@@ -9,13 +9,12 @@ class TestStatus < MiniTest::Unit::TestCase
 
   def setup
     @session = create_session
-    #savon.stubs(:mc_enum_status).with(
-      #:username => "admin",
-      #:password => "DPCJPqaDTEzB1zhx").returns(:statuses)
   end
 
   def test_status_can_be_found
-    savon.expects(:mc_enum_status).returns(:statuses)
+    savon.expects(:mc_enum_status).with(
+      :username => "admin",
+      :password => "DPCJPqaDTEzB1zhx").returns(:statuses)
     @session.config.statuses
   end
 end
