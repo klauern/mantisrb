@@ -2,24 +2,21 @@ mantisrb [![Build Status](http://travis-ci.org/klauern/mantisrb.png)](http://tra
 ========
 
 `mantisrb` is an API that works with the [Savon][1] gem to talk to a [Mantis][2]
-bug tracker.  [Mantis][2] provides an API to integrate with it through an older
-SOAP 1.1 interface (sorry) called [MantisConnect][3](see [example][4] for an API view).  
-Using this API should make working with an external Mantis bug tracker easy(ier).
+bug tracker through SOAP calls.  Mantis' SOAP interface is called [MantisConnect][3]
+(see [example][4] for an API view).
 
 Usage
 -----
 Install:
 
-```ruby
+``` ruby
 gem install mantisrb
 ```
 
 Create a session to the Mantis server:
 
 ```ruby
-require 'mantisrb'
-
-session = Mantis:Session.new "http://mantisurl.com/mantis", "Username", "Password"
+session = Mantis:Session.new "http://mantisurl.com/mantis", "YourUsername", "YourPassword"
 ```
 
 Various components are described below:
@@ -71,44 +68,6 @@ Or provide more details (some shown below):
 ```
 
 More details on what is in a project can be found in {Mantis::XSD::ProjectData}.
-
-### Categories in Projects
-Categories in projects can be manipulated and retrieved.  When creating issues,
-you will need to know what category the issue belongs to, so this should be
-helpful.
-
-Get all categories for a project:
-
-```ruby
-    session.projects.categories(project_id)
-```
-
-Add a category
-
-```ruby
-    session.projects.add_category(45, "Triage")
-    session.projects.add_category(<project_id>, <category_name>)
-```
-
-Delete a category
-
-
-```ruby
-    session.projects.delete_category(<project_id>, <category_name>)
-```
-
-Rename a category
-
-
-```ruby
-    session.projects.rename_category params={
-      project_id: <id>,
-      old_category: <category_name>,
-      new_category: <new_category_name>,
-      project_assigned_to: <id> # leaving this out will keep it in the same
-      project
-    }
-```
 
 Issues
 ------
@@ -164,10 +123,18 @@ Required fields for an issue:
 Information on what is in an Issue can be found in the {Mantis::XSD::IssueData}
 class.
 
+### Issue Check-in
 
-Filters (Mantis equivalent of a saved search)
----------------------------------------------
-Filters are Mantis' way of saving a complicated search.  You likely know what
+Issues can be updated with comments or completion with this quick call to an
+issue:
+
+```ruby
+    session.issues.checkin(issue_id, comment, completed?) # defaults to false
+```
+
+Filters
+-------
+Filters are Mantis' way of saving a configured search.  You likely know what
 they are if you have used Mantis, so if not, please take a brief look at [this
 blogpost][6] to see what you can use filters for.
 
@@ -175,8 +142,7 @@ blogpost][6] to see what you can use filters for.
 Get a filter by `id`:
 
 ```ruby
-    session.filters.by_project_id 110 # get all filters you can search by for
-    the project_id
+    session.filters.by_project_id 110 # get all filters you can search by for the project_id
 ```
 
 Get issues for a particular filter:
@@ -187,6 +153,48 @@ Get issues for a particular filter:
     session.filters.get_issues project_id, page_num, issues_per_page
     # fully-formatted search
 ```
+
+Creation/Deletion/Etc., actions on Filters are unsupported as Mantis' SOAP API
+does not support it.
+
+Categories in Projects
+----------------------
+When creating issues, you will need to know what category the issue belongs to, so this should be
+helpful.
+
+Get all categories for a project:
+
+```ruby
+    session.projects.categories(project_id)
+```
+
+Add a category
+
+```ruby
+    session.projects.add_category(45, "Triage")
+    session.projects.add_category(<project_id>, <category_name>)
+```
+
+Delete a category
+
+
+```ruby
+    session.projects.delete_category(<project_id>, <category_name>)
+```
+
+Rename a category
+
+
+```ruby
+    session.projects.rename_category params={
+      project_id: <id>,
+      old_category: <category_name>,
+      new_category: <new_category_name>,
+      project_assigned_to: <id> # leaving this out will keep it in the same
+      project
+    }
+```
+
 
 
 Compatibility

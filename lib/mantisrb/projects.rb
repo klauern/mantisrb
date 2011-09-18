@@ -65,7 +65,6 @@ module Mantis
     # @return [Array[Hash]] Array of Hashes for each project you can see
     def list
       project_list
-      #@session.response_trimmed :mc_projects_get_user_accessible
     end
 
     def project_list_xml

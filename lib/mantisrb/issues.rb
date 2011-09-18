@@ -94,6 +94,36 @@ module Mantis
       }
     end
 
+
+    # Mantis has a feature to do a quick check-in on an issue, which allows
+    # you to mark an issue as completed or to add a comment to it.
+    def checkin(issue_id, comment, fixed=false)
+      @session.response_trimmed :mc_issue_checkin, {
+        issue_id: issue_id,
+        comment: comment,
+        fixed: fixed
+      }
+    end
+
+    def add_note(issue_id, note_data)
+      @session.response_trimmmed :mc_issue_note_add, {
+        issue_id: issue_id,
+        note: note_data.to_s
+      }
+    end
+
+    def delete_note(issue_note_id)
+      @session.response_trimmed :mc_issue_note_delete, {
+        issue_note_id: issue_note_id
+      }
+    end
+
+    def update_note(note)
+      @session.response_trimmed :mc_issue_note_update, {
+        note: note
+      }
+    end
+
     private
 
     # User will pass in the name of a param, and this method will retrieve all
