@@ -16,7 +16,7 @@ require 'mantisrb'
 
 require 'mocha'
 
-MANTIS_URL = "http://www.plangineering.com/nek/mantis"
+MANTIS_URL = ENV['MANTIS_URL'] ? ENV['MANTIS_URL'] : "http://www.plangineering.com/nek/mantis"
 MANTIS_USER = "admin"
 MANTIS_PASS = "RFBDSlBxYURURXpCMXpoeA=="
 
