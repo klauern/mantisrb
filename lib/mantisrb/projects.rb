@@ -134,6 +134,130 @@ module Mantis
       }
     end
 
+
+    # Get a list of versions that this project has
+    # @param [Integer] project_id
+    # @return [Array<Mantis::XSD::ProjectVersionData>] array of
+    # {Mantis::XSD::ProjectVersionData} objects for each version
+    def get_versions(project_id)
+      @session.response_trimmed :mc_project_get_versions, {
+        project_id: project_id
+      }
+    end
+
+    # Update the version of the project
+    # @param [version_id] ID of the *version* of the project, not the project
+    # id.
+    # @param [Mantis::XSD::ProjectVersionData] project version data instance
+    def update_version(version_id, data)
+      @session.response_trimmed :mc_project_version_update, {
+        version_id: version_id,
+        version: data.to_s
+      }
+    end
+
+    # Delete a version from a project
+    # @param [Integer] version_id id of the version instance, not the
+    # project_id
+    # @return [Boolean] true or false for success
+    def delete_version(version_id)
+      @session.response_trimmed :mc_project_version_delete, {
+        version_id: version_id
+      }
+    end
+
+
+    # Get a list of released versions for this project
+    # @param [Integer] project_id
+    # @return [Array<Mantis::XSD::ProjectVersionData>] array of
+    # {Mantis::XSD::ProjectVersionData}
+    def get_released_versions(project_id)
+      versions_ary = @session.response_trimmed :mc_project_get_released_versions, {
+        project_id: project_id
+      }
+      versions_ary.map { |version| Mantis::XSD::ProjectVersionData.new version }
+    end
+
+    # Get the unreleased versions that belong to a project
+    # @param [Integer] project_id
+    # @return [Array<Mantis::XSD::ProjectVersionData>] array of
+    # ProjectVersionData
+    def get_unreleased_versions(project_id)
+      versions_ary = @session.response_trimmed :mc_project_get_unreleased_versions, {
+        project_id: project_id
+      }
+      versions_ary.map { |version| Mantis::XSD::ProjectVersionData.new version }
+    end
+
+    # Get all attachments (information) for a given project
+    # @param [Integer] project_id
+    # @return [Array<Mantis::XSD::ProjectAttachmentData>] array of project
+    # attachment data
+    def get_attachments(project_id)
+      attachments = @session.response_trimmed :mc_project_get_attachments, {
+        project_id: project_id
+      }
+      attachments.map { |attachment| Mantis::XSD::ProjectAttachmentData.new attachment }
+    end
+
+    # Get the data for an attachment for this project
+    # @param [Integer] project_attachment_id id of the attachment in the
+    # project
+    # @return [Base64] Base64 encoded data of the file
+    def get_attachment(project_attachment_id)
+      @session.response_trimmed :mc_project_attachment_get, {
+        project_attachment_id: project_attachment_id
+      }
+    end
+
+    # Add an attachment to a project
+    # @param [Integer] project_id
+    # @param [String] name filename
+    # @param [String] title Descriptive Title for the file
+    # @param [String] description
+    # @param [String] file_type
+    # @param [Base64] content Base64 encoded data representation
+    # @return [Integer] id of the attachment for reference later
+    def add_attachment(project_id, name, title, description, file_type, content)
+      @session.response_trimmed :mc_project_attachment_add, {
+        project_id: project_id,
+        name: name,
+        title: title,
+        description: description,
+        file_type: file_type,
+        content: content
+      }
+    end
+
+    # Delete an attachment for a project
+    # @param [Integer] project_attachment_id
+    # @return [Boolean] successful deletion or failure
+    def delete_attachment(project_attachment_id)
+      @session.response_trimmed :mc_project_attachment_delete, {
+        project_attachment_id: project_attachment_id
+      }
+    end
+
+    # Get all Sub Projects in a project
+    # @param [Integer] project_id
+    # @return [Array<String>] list of projects
+    def get_all_subprojects(project_id)
+      @session.response_trimmed :mc_project_get_all_subprojects, {
+        project_id: project_id
+      }
+    end
+
+    # Get the value for the specified user preference
+    # @param [Integer] project_id
+    # @param [String] pref_name name of the preference to get
+    # @return [String]
+    def get_user_preference(project_id, pref_name)
+      @session.response_trimmed :mc_user_pref_get_pref, {
+        project_id: project_id,
+        pref_name: pref_name
+      }
+    end
+
     private
 
     # The SOAP response from MantisConnect is an array of

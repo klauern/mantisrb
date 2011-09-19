@@ -11,12 +11,11 @@ module Mantis::XSD
     # Mantis servers.  it's not provided out-of-the-box
     # for the SOAP API, but unless a new type has been defined,
     # this should get you somewhere.
-    DEFAULT_TYPES = {
-      2: "parent of",
-      3: "child of",
-      0: "duplicate of",
-      4: "has duplicate",
-      1: "related to"
+    DEFAULT_TYPES = { 2 => "parent of",
+      3 => "child of",
+      0 => "duplicate of",
+      4 => "has duplicate",
+      1 => "related to"
     }
 
     def to_doc(tag_name)
