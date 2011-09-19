@@ -132,6 +132,10 @@ issue:
     session.issues.checkin(issue_id, comment, completed?) # defaults to false
 ```
 
+There are a number of other features that you can manipulate through the API,
+so check out the documentation for more.  See {Mantis::Issues} for more
+information on the other types (relationships, attachments, etc.)
+
 Filters
 -------
 Filters are Mantis' way of saving a configured search.  You likely know what

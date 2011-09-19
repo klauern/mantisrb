@@ -74,6 +74,12 @@ module Mantis
       @custom_field_types ||= @session.response_trimmed :mc_enum_custom_field_types
     end
 
+    def enum_get(type)
+      @session.response_trimmed :mc_enum_get, {
+        enumeration: type
+      }
+    end
+
     # instead of writing an individual <some_config_type>_for(value), create
     # a meta-method that will just retrieve the actual ObjectRef for the type
     # and the known value for it.

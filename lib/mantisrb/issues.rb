@@ -106,9 +106,10 @@ module Mantis
     end
 
     def add_note(issue_id, note_data)
+      note_data = Mantis::XSD::IssueNoteData.new(note_data) if note_data.class == Hash
       @session.response_trimmmed :mc_issue_note_add, {
         issue_id: issue_id,
-        note: note_data.to_s
+        note: note.to_s
       }
     end
 
@@ -119,8 +120,66 @@ module Mantis
     end
 
     def update_note(note)
+      note = Mantis::XSD::IssueNoteData.new(note) if note.class == Hash
       @session.response_trimmed :mc_issue_note_update, {
         note: note
+      }
+    end
+
+    # Add a relationship to an issue.
+    # @param [Integer] issue id of the issue
+    # @param [Mantis::XSD::RelationshipData] relationship Relationship
+    # information
+    # @return [Integer] id of the relationship
+    def add_relationship(issue_id, relationship)
+      @session.response_trimmed :mc_issue_relationship_add, {
+        issue_id: issue_id,
+        relationship: relationship.to_s
+      }
+    end
+
+    # Delete an issue relationship (can be done from either side of the issue)
+    # @param [Integer] issue_id
+    # @param [Integer] relationship_id
+    # @return [Boolean] succes or failure
+    def delete_relationship(issue_id, relationship_id)
+      @session.response_trimmed :mc_issue_relationship_delete, {
+        issue_id: issue_id,
+        relationship_id: relationship_id
+      }
+    end
+
+    # Add an attachment to an issue
+    # @param [Integer] issue_id
+    # @param [String] name name of the file
+    # @param [String] file_type
+    # @param [Base64] data a Base64 encoded binary data representation of the
+    # attachment
+    # @return [Integer] attachment id to reference
+    def add_attachment(issue_id, name, file_type, data)
+      @session.response_trimmed :mc_issue_attachment_add, {
+        issue_id: issue_id,
+        name: name,
+        file_type: file_type,
+        content: data
+      }
+    end
+
+    # Delete an attachment
+    # @param [Integer] attachment_id
+    # @return [Boolean] success or failure
+    def delete_attachment(attachment_id)
+      @session.response_trimmed :mc_issue_attachment_delete, {
+        issue_attachment_id: attachment_id
+      }
+    end
+
+    # Get an attachment
+    # @param [Integer] attachment_id id of the attachment
+    # @return [Base64] Base64 encoded data representation of the file
+    def get_attachment(attachment_id)
+      @session.response_trimmed :mc_issue_attachment_get, {
+        issue_attachment_id: attachment_id
       }
     end
 
