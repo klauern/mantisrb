@@ -17,8 +17,8 @@ module Mantis::XSD::DocBuilder
     "tns:ObjectRef" => Mantis::XSD::ObjectRef,
     "tns:ProjectAttachmentData" => Mantis::XSD::ProjectAttachmentData,
     "tns:ProjectData" => Mantis::XSD::ProjectData,
-    "tns:ProjectVersionData" => Mantis::XSD::ProjectVersionData
-    "tns:RelationshipData" => Mantis::XSD::RelationshipData,
+    "tns:ProjectVersionData" => Mantis::XSD::ProjectVersionData,
+    "tns:RelationshipData" => Mantis::XSD::RelationshipData
   }
   
   # Create a new instance of the XSD type
