@@ -25,4 +25,6 @@ module Mantis::XSD
   autoload :ProjectData,                  'mantisrb/xsd/project_data'
   autoload :RelationshipData,             'mantisrb/xsd/relationship_data'
   autoload :DocBuilder,                   'mantisrb/xsd/doc_builder'
+  autoload :ProjectAttachmentData,        'mantisrb/xsd/project_attachment_data'
+  autoload :ProjectVersionData,           'mantisrb/xsd/project_version_data'
 end
