@@ -15,39 +15,15 @@ $:.unshift(File.expand_path(File.dirname(__FILE__)))
 require 'mantisrb'
 require 'base64'
 
+# Retrieve a Password from the environment that is Base64 encoded (just for
+# obfuscation) (MANTIS_PASS)
 PASS = Base64.decode64(ENV['MANTIS_PASS'])
+# Retrieve a URL to Mantis from your environment (MANTIS_URL)
 URL = ENV['MANTIS_URL']
+# Retrieve the user name to log in as (MANTIS_USER) from your environment
 USER = ENV['MANTIS_USER']
+# Create a Session with your environment settings (MANTIS_URL, MANTIS_USER,
+# MANTIS_PASS)
 SESSION = Mantis::Session.new URL, USER, PASS
 
-
-def try_project_create
-  binding.pry
-  SESSION.projects.create params={
-    name: "Test_Project",
-    status: "development",
-    enabled: true,
-    view_state: "public",
-    inherit_global: true
-  }
-end
-
-
-def try_proj
-  client = SESSION.savon_client
-  client.request :mc_project_add do
-    soap.body do |xml|
-      xml.username(:type => "xsd:string"){ xml << "admin"}
-      xml.password(:type => "xsd:string"){ xml << 'DPCJPqaDTEzB1zhx'}
-      xml.project(:type => "tns:ProjectData") { 
-        xml.name("Test_Project")
-        xml.status(:type => "tns:ObjectRef") { xml.id '10'
-                                               xml.name 'development' }
-        xml.view_state(type: 'tns:ObjectRef') { xml.id '10'
-                                                xml.name 'public' }
-        xml.enabled true
-      }
-    end
-  end
-end
-  
+binding.pry
