@@ -220,6 +220,36 @@ For any questions / suggestions / contributions, contact me at:
 Email: klauer - at - gmail - dot - com for more information or send me a pull-request.
 
 
+Bugs/Issues/TODO's
+==================
+There are alot of things I don't have done in this, but you should be able to
+get by for the most part with:
+
+  * querying projects/issues/filters, etc
+  * CRUD tasks on issues/projects/filters/categories, etc.
+
+
+What isn't done:
+----------------
+
+  * Mocking - I have yet to get mocking to work on this project, and I could
+    use someone's help in getting that up.  That would make finishing the
+    testing SOOO much easier.
+  * Testing - I have a long way to go
+
+
+What can't be done:
+------------------
+Unfortunately, MantisConnect just isn't as full-featured as their web
+application.  If you want feature parity with Mantis, I have yet to find an API
+that will work with it, besides attempting to stub out all of the calls that
+are normally performed from the browser in an API, or possibly hard-wiring your
+application into the Mantis Database tables.
+
+I have at a minimum, implemented every method call that MantisConnect provides.
+If `mantisrb` doesn't provide something, it's probably not in their SOAP API.
+
+
  [1]: http://www.savonrb.com
  [2]: http://www.mantisbt.org
  [3]: http://www.futureware.biz/mantisconnect/concept.php

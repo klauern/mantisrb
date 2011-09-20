@@ -1,5 +1,6 @@
 module Mantis::XSD
 
+  # Information on any Issue
   class IssueData
     include Mantis::XSD::DocBuilder
 
@@ -11,10 +12,16 @@ module Mantis::XSD
       :additional_information, :attachments, :relationships, :notes, 
       :custom_fields, :due_date, :monitors
 
+    # Create an XML string representation of this object (without the <xml?>
+    # tag)
+    # @return [String] XML string
     def to_s
       to_element_string("issue")
     end
 
+    # Create a Nokogiri Node from this object
+    # @param [String] tag_name
+    # @return [Nokogiri::XML::Node]
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:IssueData") do

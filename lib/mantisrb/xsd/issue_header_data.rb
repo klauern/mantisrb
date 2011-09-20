@@ -1,5 +1,6 @@
 module Mantis::XSD
 
+  # IssueHeaderData is an abbreviated set of attributes for an issue
   class IssueHeaderData
     include Mantis::XSD::DocBuilder
     attr_reader :id
@@ -7,6 +8,9 @@ module Mantis::XSD
       :severity, :status, :reporter, :summary, :handler, :resolution,
       :attachments_count, :notes_count
 
+    # Create an XML doc
+    # @param [String] tag_name Name to wrap the XML elements around
+    # @return [Nokogiri::XML::Node]
     def to_doc(tag_name)
       # TODO: surround conditional
       builder = Nokogiri::XML::Builder.new { |xml|

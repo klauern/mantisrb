@@ -12,7 +12,8 @@ require 'mantisrb/filters'
 
 include Log4r
 
-# XSD types that might not be used immediately depending on what you're doing
+# XSD types that represent some component to MantisConnect and will relate to
+# either parsing or generating valid XML for the SOAP call.
 module Mantis::XSD
   autoload :AccountData,                  'mantisrb/xsd/account_data'
   autoload :AttachmentData,               'mantisrb/xsd/attachment_data'

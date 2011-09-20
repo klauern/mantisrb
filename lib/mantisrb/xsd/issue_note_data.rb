@@ -1,11 +1,15 @@
 module Mantis::XSD
 
+  # A Note or Comment on an issue.  Notes can be private or public, and each
+  # note is created by someone that can be tracked.
   class IssueNoteData
     include Mantis::XSD::DocBuilder
 
     attr_accessor :id, :reporter, :text, :view_state, :date_submitted, :last_modified,
       :time_tracking, :note_type, :note_attr
 
+    # Create an XML Node out of this object
+    # @param [String] tag_name name to wrap the XML node in
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:IssueNoteData") do

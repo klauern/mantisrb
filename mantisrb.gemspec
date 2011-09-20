@@ -4,7 +4,7 @@ require "mantisrb/version"
 
 Gem::Specification.new do |s|
   s.name        = "mantisrb"
-  s.version     = Mantisrb::VERSION
+  s.version     = Mantis::VERSION
   s.authors     = ["Nick Klauer"]
   s.email       = ["klauer@gmail.com"]
   s.homepage    = "http://github.com/klauern/mantisrb"

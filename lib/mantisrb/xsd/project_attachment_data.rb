@@ -1,5 +1,7 @@
 module Mantis::XSD
 
+  # Attachments that can be inserted into a Project itself (and not limited to
+  # an Issue in a Project)
   class ProjectAttachmentData
 
     include Mantis::XSD::DocBuilder
@@ -9,6 +11,8 @@ module Mantis::XSD
     
 
     # Creates a Nokogiri::XML::Element object out of this class
+    # @param [String] tag_filename
+    # @return [Nokogiri::XML::Document]
     def to_doc(tag_filename)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_filename, type: "tns:ProjectAttachmentData") do

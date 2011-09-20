@@ -1,5 +1,7 @@
 module Mantis::XSD
 
+  # Relationships map one issue to another issue.  Issues can be children of
+  # another issue, parents of, related to, duplicate of, and others.
   class RelationshipData
 
     include Mantis::XSD::DocBuilder
@@ -18,6 +20,10 @@ module Mantis::XSD
       1 => "related to"
     }
 
+    # Create an XML Element out of this Object instance.
+    # @param [String] tag_name name of the XML element ot wrap these attributes
+    # around.
+    # @return [Nokogiri::XML::Document]
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:RelationshipData") do

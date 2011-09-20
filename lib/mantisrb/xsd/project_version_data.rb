@@ -1,5 +1,7 @@
 module Mantis::XSD
 
+  # Versions that are a part of a Project.  These stay with a project and are
+  # not generally transferrable between projects.
   class ProjectVersionData
 
     include Mantis::XSD::DocBuilder
@@ -9,6 +11,8 @@ module Mantis::XSD
     
 
     # Creates a Nokogiri::XML::Element object out of this class
+    # @param [String] tag_name name of the XML element to wrap these attributes
+    # in.
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:ProjectVersionData") do

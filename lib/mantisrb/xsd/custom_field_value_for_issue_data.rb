@@ -1,5 +1,8 @@
 module Mantis::XSD
 
+  # Custom Fields are defined for all projects.  Custom Fields are just
+  # a designation given to define a String for a property, so you should be
+  # able to get Custom Fields for any project.
   class CustomFieldValueForIssueData
     include Mantis::XSD::DocBuilder
     attr_accessor :field, :value

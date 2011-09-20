@@ -1,5 +1,7 @@
 module Mantis::XSD
 
+  # Attachments are files that can be provided to either Issues or Projects in
+  # mantis.  Use this class to construct an attachment for upload.
   class AttachmentData
     include Mantis::XSD::DocBuilder
     attr_accessor :id, :filename, :size, :content_type, :date_submitted, :download_url, :user_id

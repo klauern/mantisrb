@@ -1,5 +1,6 @@
 module Mantis::XSD
 
+  # Information about a given project.
   class ProjectData
 
     include Mantis::XSD::DocBuilder
@@ -10,6 +11,7 @@ module Mantis::XSD
     
 
     # Creates a Nokogiri::XML::Element object out of this class
+    # @param [String] tag_name name of XML Node to wrap these elements in.
     def to_doc(tag_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(tag_name, type: "tns:ProjectData") do

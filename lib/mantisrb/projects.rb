@@ -1,21 +1,40 @@
 module Mantis
 
+  # Projects house Issues.
   class Projects
 
+    # You will need a {Mantis::Session} to manipulate projects (based on your
+    # user's access).
+    # @param [Mantis::Session] session instance of a session that you've
+    # created.
     def initialize session
       @session = session
     end
 
+    # Get a project id if you know it's name
+    # @param [String] project_name
+    # @return [Integer] project id.
     def id_by_name(project_name)
       @session.response_trimmed :mc_project_get_id_from_name,
         { :project_name => project_name }
     end
 
+    # Get the issues for a project (all issues, completed or not)
+    # @param [String] project_name Name of the project
+    # @param [Integer] page Page Number to load (defaults to first page)
+    # @param [Integer] per_page Number of issues to retrieve per page (defaults
+    # to 100)
+    # @return [Array<Mantis::XSD::IssueData>] Array of {Mantis::XSD::IssueData}
     def issues(project_name, page=0, per_page=100)
       id = id_by_name(project_name)
       issues_by_project_id(id, page, per_page)
     end
 
+    # Get a list of issues by the project id
+    # @param [Integer] id
+    # @param [Integer] page Page Number to load up (default=0)
+    # @param [Integer] per_page Number of issues to load per page (default=100
+    # @return [Array<Mantis::XSD::IssueData>]
     def issues_by_project_id(id, page=0, per_page=100)
       issues = @session.response_trimmed(:mc_project_get_issues, {
         project_id: id,
@@ -28,6 +47,11 @@ module Mantis
       issues.map { |issue| Mantis::XSD::IssueData.new issue }
     end
 
+    # Get An abbreviated listing of issue header information by project id
+    # @param [Integer] id
+    # @param [Integer] page Page Number to load up (default=0)
+    # @param [Integer] per_page Number of issues to load per page (default=100)
+    # @return [Array<Mantis::XSD::IssueData>]
     def issue_headers_by_project_id(id, page=0, per_page=100)
       issues = [] << @session.response_trimmed(:mc_project_get_issue_headers, {
         project_id: id,
@@ -37,6 +61,9 @@ module Mantis
       issues.map { |issue| Mantis::XSD::IssueHeaderData.new issue }
     end
 
+    # Find a project by ID
+    # @param [Integer] project_id
+    # @return [Mantis::XSD::ProjectData] information about the project
     def find_by_id(project_id)
       proj_list = list
       proj_list.select { |proj|
@@ -44,7 +71,8 @@ module Mantis
       }[0]
     end
 
-    # Return an Array of project Hashes
+    # Get a list of all projects this user can see
+    # @return [Array<Mantis::XSD::ProjectData>]
     def project_list
       proj_list = @session.response_trimmed :mc_projects_get_user_accessible
       # Savon will wrap an array of arrays of hashes if there's only one
@@ -67,6 +95,9 @@ module Mantis
       project_list
     end
 
+    # Get a list of Projects this user can see, as only a Hash of the XML
+    # response
+    # @return [Hash]
     def project_list_xml
       @session.response(:mc_projects_get_user_accessible).to_xml
     end
@@ -80,9 +111,15 @@ module Mantis
         Mantis::XSD::ProjectData.new(params).document("project")
     end
 
+    # {@see add}
     alias :create :add
 
     # Update an existing project, given the id and the params
+    # @param [Hash] params Project Data that you want to update.  Everything in
+    # the instance will overwrite what is currently there, so load it before
+    # changing it, unless you'd like to change everything.
+    # @param [Mantis::XSD::ProjectData] params
+    # @return [Boolean] success or failure
     def update?(params)
       params = remap_params_for_project_data(params)
       @session.response_trimmed :mc_project_update,
@@ -90,6 +127,7 @@ module Mantis
     end
 
     # Remove a project from Mantis with the given @id_num
+    # @param [Integer] id_num Project ID
     # @return [Boolean] whether deletion was successful
     def delete?(id_num)
       @session.response_trimmed :mc_project_delete, {
@@ -98,6 +136,7 @@ module Mantis
     end
 
     # Get a list of all categories a project has
+    # @param [Integer] project_id
     def categories(project_id)
       @session.response_trimmed :mc_project_get_categories, {
         project_id: project_id
@@ -105,6 +144,9 @@ module Mantis
     end
 
     # Add a new category name to an existing project
+    # @param [Integer] project_id
+    # @param [String] name Name of the category to create for a Project.
+    # @return [Integer] Category ID
     def add_category(project_id, name)
       @session.response_trimmed :mc_project_add_category, {
         project_id: project_id,
@@ -113,6 +155,9 @@ module Mantis
     end
 
     # Delete a known category by name from an existing project
+    # @param [Integer] project_id id of the project to delete the category from
+    # @param [String] name Name of the category to delete
+    # @return [Boolean] success or failure of deletion
     def delete_category(project_id, name)
       @session.response_trimmed :mc_project_delete_category, {
         project_id: project_id,
@@ -122,12 +167,23 @@ module Mantis
 
     # Rename a category in a project, and optionally put it in a new
     # project.
-    def rename_category(params)
+    # @param [Integer] project_id
+    # @param [String] category_name_old
+    # @param [String] category_name_new
+    # @param [Integer] assigned_to ID of the user this category is assigned to
+    def rename_category(project_id, category_name_old, category_name_new, assigned_to)
       hash = rename_category_hash(params)
-      @session.response_trimmed :mc_project_rename_category_by_name, hash
+      @session.response_trimmed :mc_project_rename_category_by_name, {
+        project_id: project_id,
+        p_category_name: category_name_old,
+        p_category_name_new: category_name_new,
+        p_assigned_to: assigned_to
+      }
     end
 
-    # TODO: Test this with actual custom fields
+    # Get a list of custom fields that are configured for this project
+    # @param [Integer] id_num Project ID
+    # @return [Hash] Hash of custom field types
     def custom_fields_for(id_num)
       @session.response_trimmed :mc_project_get_custom_fields, {
         projec_id: id_num
@@ -294,6 +350,7 @@ module Mantis
 
 
     # Create the correct hash for calling a rename category
+    # @param [Hash] parameters to rename category for
     def rename_category_hash(params)
       if params != Hash
         raise <<-ERR

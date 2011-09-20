@@ -1,5 +1,9 @@
 module Mantis::XSD
 
+  # ObjectRef is used alot in Mantis to wrap Enums and various other pieces of
+  # information. An ObjectRef has an ID and a Name, and that's it. Most
+  # ObjectRef's don't map to other ObjectRef's, so the ID is not to be taken as
+  # canonical for all types of ObjectRef.
   class ObjectRef
     
     include Mantis::XSD::DocBuilder
@@ -18,6 +22,8 @@ module Mantis::XSD
     #   <id>10</id>
     #   <name>public</name>
     # </status>
+    # @param [String] element_name name of the XML node to wrap this in
+    # @return [Nokogiri::XML::Document]
     def to_doc(element_name)
       builder = Nokogiri::XML::Builder.new { |xml|
         xml.send(element_name, type: "tns:ObjectRef") do 
