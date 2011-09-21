@@ -1,12 +1,9 @@
-require 'simplecov'
-SimpleCov.start do 
-  add_filter 'spec/'
-end
+require 'bundler/setup'
+Bundler.require(:default, :development, :guard)
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rake/clean'
-require 'rake'
-require 'yard'
+
 
 CLOBBER.include('pkg')
 CLOBBER.include('coverage')

@@ -106,7 +106,6 @@ DEPENDENCIES
   mantisrb!
   minitest (>= 2.5.0)
   pry (>= 0.9.5)
-  rake
   rb-fchange
   rb-fsevent
   rb-notifu

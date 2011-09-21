@@ -5,7 +5,6 @@ gemspec
 
 group :development do
   gem "minitest", ">= 2.5.0"
-  gem "rake"
   gem "yard"
   gem "rdiscount"
   gem "simplecov", '>= 0.5.2'
