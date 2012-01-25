@@ -7,7 +7,7 @@ group :development do
   gem "minitest", ">= 2.5.0"
   gem "yard"
   gem "rdiscount"
-  gem "simplecov", '>= 0.5.2'
+  #gem "simplecov", '>= 0.5.2'
   gem "pry", ">= 0.9.5"
   gem "savon_spec"
 end

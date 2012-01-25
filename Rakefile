@@ -32,3 +32,9 @@ YARD::Rake::YardocTask.new do |t|
   t.options= [ '--files', 'LICENSE']
   #t.options = ['--any', '--extra', '--opts'] # optional
 end
+
+desc "List all Undocumented methods and variables from YARD"
+task :undoc do
+  YARD::CLI::Stats.run('--list-undoc')
+end
+
