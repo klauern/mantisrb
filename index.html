@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mantisrb by klauern</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/klauern/mantisrb">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/klauern/mantisrb/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/klauern/mantisrb/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Mantisrb</h1>
+          <p>MantisBT API for Ruby</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/klauern">klauern</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>mantisrb <a href="http://travis-ci.org/klauern/mantisrb"><img src="http://travis-ci.org/klauern/mantisrb.png" alt="Build Status"></a>
+</h1>
+
+<p><code>mantisrb</code> is an API that works with the <a href="http://www.savonrb.com">Savon</a> gem to talk to a <a href="http://www.mantisbt.org">Mantis</a>
+bug tracker through SOAP calls.  Mantis' SOAP interface is called <a href="http://www.futureware.biz/mantisconnect/concept.php">MantisConnect</a>
+(see <a href="http://www.mantisbt.org/demo/api/soap/mantisconnect.php">example</a> for an API view).</p>
+
+<h2>Usage</h2>
+
+<p>Install:</p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="n">install</span> <span class="n">mantisrb</span>
+</pre>
+</div>
+
+
+<p>Create a session to the Mantis server:</p>
+
+<div class="highlight">
+<pre><span class="n">session</span> <span class="o">=</span> <span class="no">Mantis</span><span class="ss">:Session</span><span class="o">.</span><span class="n">new</span> <span class="s2">"<a href="http://mantisurl.com/mantis">http://mantisurl.com/mantis</a>"</span><span class="p">,</span> <span class="s2">"YourUsername"</span><span class="p">,</span> <span class="s2">"YourPassword"</span>
+</pre>
+</div>
+
+
+<p>Various components are described below:</p>
+
+<h2>Config</h2>
+
+<p>Configuration details about the Mantis installation can be retrieved, such
+as finding out the status types, access levels, and view states:</p>
+
+<div class="highlight">
+<pre><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">priorities</span> <span class="c1"># get priorities</span>
+<span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">statuses</span> <span class="c1"># possible issue statuses</span>
+<span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">version</span> <span class="c1"># Mantis version</span>
+<span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">access_levels</span>
+</pre>
+</div>
+
+
+<p>More information on this can be found in {Mantis::Config}.</p>
+
+<h2>Projects</h2>
+
+<p>Get a list of projects that your user can access:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">list</span>
+</pre>
+</div>
+
+
+<p>Create a project:</p>
+
+<div class="highlight">
+<pre>    <span class="n">project_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">create</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+      <span class="nb">name</span><span class="p">:</span> <span class="s2">"project name"</span>  <span class="c1"># Minimally, this is all you need</span>
+    <span class="p">}</span>
+</pre>
+</div>
+
+
+<p>Or provide more details (some shown below):</p>
+
+<div class="highlight">
+<pre>    <span class="n">project</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">create</span> <span class="p">{</span>
+      <span class="nb">name</span><span class="p">:</span> <span class="s2">"project thing"</span><span class="p">,</span>
+      <span class="n">status</span><span class="p">:</span> <span class="s2">"development"</span>
+      <span class="n">enabled</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+      <span class="n">view_state</span><span class="p">:</span> <span class="ss">:public</span> <span class="c1"># or 'public', or session.projects.status.public,</span>
+      <span class="n">inherit_from_global</span><span class="p">:</span> <span class="kp">true</span>
+    <span class="p">}</span>
+
+    <span class="n">project</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># "project thing"</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">id</span>    <span class="c1"># 10 or whatever for referencing</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</pre>
+</div>
+
+
+<p>More details on what is in a project can be found in {Mantis::XSD::ProjectData}.</p>
+
+<h2>Issues</h2>
+
+<p>Getting issues is easy, too:</p>
+
+<p>by id:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">by_id</span> <span class="mi">110</span> <span class="c1"># if you know the id</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">exists?</span> <span class="mi">110</span> <span class="c1"># if you don't know if it's there</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">by_name</span> <span class="s2">"problem name I solved"</span> <span class="c1"># name of Mantis issue that</span>
+    <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">search</span> <span class="n">explicitly</span> <span class="n">by</span> <span class="p">(</span><span class="n">no</span> <span class="n">wildcards</span> <span class="ow">or</span> <span class="n">regex</span><span class="err">'</span><span class="n">ing</span><span class="p">,</span> <span class="n">sorry</span><span class="p">)</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">issues</span> <span class="s2">"project name"</span> <span class="c1"># get first 100 issues by Project Name</span>
+</pre>
+</div>
+
+
+<p>by ugly Mantis summary searching:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">summary_matches</span> <span class="s2">"some regex"</span>  <span class="c1"># Do some ssearching (mind, it</span>
+    <span class="n">is</span> <span class="n">going</span> <span class="n">to</span> <span class="n">be</span> <span class="n">pretty</span> <span class="n">slow</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>by project id:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">by_project_id</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">page_</span><span class="c1">#, issues_per_page # The</span>
+    <span class="n">fully</span> <span class="n">flexible</span> <span class="n">way</span> <span class="n">of</span> <span class="n">getting</span> <span class="n">a</span> <span class="n">list</span> <span class="n">of</span> <span class="n">issues</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">by_project_id</span> <span class="n">project_id</span> <span class="c1"># gets you an Enumerable to go</span>
+    <span class="n">through</span> <span class="n">things</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">by_project_id</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">limit</span> <span class="c1"># number of issues to get at</span>
+    <span class="n">once</span>
+</pre>
+</div>
+
+
+<p>Creating them isn't too bad (know your options):</p>
+
+<div class="highlight">
+<pre>    <span class="n">issue</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">create</span> <span class="p">{</span>
+      <span class="n">summary</span><span class="p">:</span> <span class="s2">"issue description somewhere here"</span><span class="p">,</span>
+      <span class="n">priority</span><span class="p">:</span> <span class="ss">:high</span><span class="p">,</span>
+      <span class="n">due_date</span><span class="p">:</span> <span class="s2">"10/13/2011 08:45 AM"</span> <span class="c1"># or other formats as DateTime will</span>
+      <span class="n">accept</span>
+    <span class="p">}</span>
+</pre>
+</div>
+
+
+<p>Required fields for an issue:
+  - project (<code>id</code> or <code>name</code> of project will work)
+  - summary
+  - description
+  - category name (you can get this from the project)</p>
+
+<p>Information on what is in an Issue can be found in the {Mantis::XSD::IssueData}
+class.</p>
+
+<h3>Issue Check-in</h3>
+
+<p>Issues can be updated with comments or completion with this quick call to an
+issue:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">checkin</span><span class="p">(</span><span class="n">issue_id</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">completed?</span><span class="p">)</span> <span class="c1"># defaults to false</span>
+</pre>
+</div>
+
+
+<p>There are a number of other features that you can manipulate through the API,
+so check out the documentation for more.  See {Mantis::Issues} for more
+information on the other types (relationships, attachments, etc.)</p>
+
+<h2>Filters</h2>
+
+<p>Filters are Mantis' way of saving a configured search.  You likely know what
+they are if you have used Mantis, so if not, please take a brief look at <a href="http://www.mantisbt.org/blog/?p=6">this
+blogpost</a> to see what you can use filters for.</p>
+
+<p>Get a filter by <code>id</code>:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">by_project_id</span> <span class="mi">110</span> <span class="c1"># get all filters you can search by for the project_id</span>
+</pre>
+</div>
+
+
+<p>Get issues for a particular filter:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get_issues</span> <span class="n">project_id</span> <span class="c1"># get first 100 issues for a given</span>
+    <span class="n">filter</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get_issues</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">page_num</span><span class="p">,</span> <span class="n">issues_per_page</span>
+    <span class="c1"># fully-formatted search</span>
+</pre>
+</div>
+
+
+<p>Creation/Deletion/Etc., actions on Filters are unsupported as Mantis' SOAP API
+does not support it.</p>
+
+<h2>Categories in Projects</h2>
+
+<p>When creating issues, you will need to know what category the issue belongs to, so this should be
+helpful.</p>
+
+<p>Get all categories for a project:</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">categories</span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Add a category</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">add_category</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="s2">"Triage"</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">add_category</span><span class="p">(</span><span class="o">&lt;</span><span class="n">project_id</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">category_name</span><span class="o">&gt;</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Delete a category</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">delete_category</span><span class="p">(</span><span class="o">&lt;</span><span class="n">project_id</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">category_name</span><span class="o">&gt;</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Rename a category</p>
+
+<div class="highlight">
+<pre>    <span class="n">session</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">rename_category</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+      <span class="n">project_id</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="n">old_category</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">category_name</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="n">new_category</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">new_category_name</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="n">project_assigned_to</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span> <span class="c1"># leaving this out will keep it in the same</span>
+      <span class="n">project</span>
+    <span class="p">}</span>
+</pre>
+</div>
+
+
+<h2>Compatibility</h2>
+
+<p>You can see which environments have been tested on <a href="http://travis-ci.org/#!/klauern/mantisrb">Travis CI</a>.  JRuby support 
+is lacking, as it appears there might be an issue with <a href="http://nokogiri.org/Nokogiri/XML/Builder.html">Nokogiri</a> and 
+<a href="http://www.savonrb.com/">Savon</a> gems (to be determined).  Any help in getting JRuby to work (w/
+JRUBY_OPTS=--1.9) would be greatly appreciated.</p>
+
+<h1>License, Open-Source-ness, and other Miscellany</h1>
+
+<p>I've licensed <code>mantisrb</code> with the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>, which should be permissive
+enough for you to muck around and fiddle with.  It's open-source, so
+contributions are welcomed and encouraged.</p>
+
+<p>For any questions / suggestions / contributions, contact me at:</p>
+
+<p>Email: klauer - at - gmail - dot - com for more information or send me a pull-request.</p>
+
+<h1>Bugs/Issues/TODO's</h1>
+
+<p>There are alot of things I don't have done in this, but you should be able to
+get by for the most part with:</p>
+
+<ul>
+<li>querying projects/issues/filters, etc</li>
+<li>CRUD tasks on issues/projects/filters/categories, etc.</li>
+</ul><h2>What isn't done:</h2>
+
+<ul>
+<li>Mocking - I have yet to get mocking to work on this project, and I could
+use someone's help in getting that up.  That would make finishing the
+testing SOOO much easier.</li>
+<li>Testing - I have a long way to go</li>
+</ul><h2>What can't be done:</h2>
+
+<p>Unfortunately, MantisConnect just isn't as full-featured as their web
+application.  If you want feature parity with Mantis, I have yet to find an API
+that will work with it, besides attempting to stub out all of the calls that
+are normally performed from the browser in an API, or possibly hard-wiring your
+application into the Mantis Database tables.</p>
+
+<p>I have at a minimum, implemented every method call that MantisConnect provides.
+If <code>mantisrb</code> doesn't provide something, it's probably not in their SOAP API.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
