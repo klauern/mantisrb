@@ -1,4 +1,4 @@
-mantisrb [![Build Status](http://travis-ci.org/klauern/mantisrb.png)](http://travis-ci.org/klauern/mantisrb)
+mantisrb [![Build Status](https://secure.travis-ci.org/klauern/mantisrb.png)](http://travis-ci.org/klauern/mantisrb)
 ========
 
 `mantisrb` is an API that works with the [Savon][1] gem to talk to a [Mantis][2]
